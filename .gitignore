@@ -1,4 +1,4 @@
 # PyCharm IDE
 .git/
 .idea/
-hms/__pycache__/
+**/__pycache__
