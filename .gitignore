@@ -1,3 +1,4 @@
 # PyCharm IDE
 .git/
 .idea/
+__pycache__/
