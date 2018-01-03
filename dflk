@@ -1,0 +1,126 @@
+[33mcommit 2bba6cf184f1dfffad8628a032737fa817ec62f0[m
+Merge: 8f883cd a7219e2
+Author: Krishna Upadhyay <072bct517krishna@ioe.edu.np>
+Date:   Wed Jan 3 23:28:07 2018 +0545
+
+    Merge pull request #3 from 24coder/backend
+    
+    Create main app for the project
+
+[33mcommit a7219e2713d0b56c8553dd7ad71d4dd2812870ee[m
+Author: Krishna Upadhyay <072bct517krishna@ioe.edu.np>
+Date:   Wed Jan 3 21:47:42 2018 +0545
+
+    Create main app for the project
+
+[33mcommit 8f883cd115499b9fe04f7714cad9fc6b4b192099[m
+Author: Krishna Upadhyay <072bct517krishna@ioe.edu.np>
+Date:   Wed Jan 3 09:01:47 2018 +0545
+
+    z
+
+[33mcommit b5c6aa13bee83dc921d7718db2dc3d7faa7afa5a[m
+Author: Krishna Upadhyay <072bct517krishna@ioe.edu.np>
+Date:   Wed Jan 3 09:00:43 2018 +0545
+
+    	modified:   .gitignore
+
+[33mcommit f57d4f869dc2ea426a06f789db73334f5d268921[m
+Author: Krishna Upadhyay <072bct517krishna@ioe.edu.np>
+Date:   Wed Jan 3 08:54:37 2018 +0545
+
+    Update .gitignore
+
+[33mcommit 1d93edc27a22e45a800e5b9e1f045649f7b8d442[m
+Author: Krishna Upadhyay <072bct517krishna@ioe.edu.np>
+Date:   Wed Jan 3 08:52:05 2018 +0545
+
+    Added __Pycache__ on gitignore
+
+[33mcommit ba679c8cbd88a6414788393e005f573f1bf12f3b[m
+Merge: ad30fad 6aa01fb
+Author: mrkrishnaupadhyay <072bct517krishna@ioe.edu.np>
+Date:   Tue Jan 2 09:46:13 2018 +0545
+
+    Merge pull request #2 from 24coder/origin/master
+    
+    Time Zone
+
+[33mcommit 6aa01fb2b999d8e617fb5d13a0b2759284a938be[m
+Author: Krishna Upadhyay <072bct517krishna@ioe.edu.np>
+Date:   Tue Jan 2 09:38:49 2018 +0545
+
+    Time Zone
+
+[33mcommit ad30fad06ea6282aec0c0b4ab24ef94b753c9835[m
+Merge: 046c2b3 51304be
+Author: mrkrishnaupadhyay <072bct517krishna@ioe.edu.np>
+Date:   Tue Jan 2 09:33:02 2018 +0545
+
+    Merge pull request #1 from 24coder/origin/krishna
+    
+    Created gitignore file
+
+[33mcommit 51304be50b4899a239f280cd1e2519f45cde4cb8[m
+Author: Krishna Upadhyay <072bct517krishna@ioe.edu.np>
+Date:   Tue Jan 2 09:32:00 2018 +0545
+
+    Created gitignore file
+
+[33mcommit 046c2b3d4970a8adcee0c322b3430a0852f4b998[m
+Author: mrkrishnaupadhyay <072bct517krishna@ioe.edu.np>
+Date:   Tue Jan 2 08:58:10 2018 +0545
+
+    Update README.md
+
+[33mcommit 870efaeabeeef87da7858daea332914ad48790ff[m
+Author: mrkrishnaupadhyay <072bct517krishna@ioe.edu.np>
+Date:   Mon Jan 1 23:15:21 2018 +0545
+
+    Update README.md
+
+[33mcommit 6b1ce5782dd1c8109022e80f55d5151137913b74[m
+Author: mrkrishnaupadhyay <072bct517krishna@ioe.edu.np>
+Date:   Mon Jan 1 22:58:57 2018 +0545
+
+    Update requirements.txt
+
+[33mcommit f362b04f791361b947e37582cececbe6b8f44c78[m
+Author: mrkrishnaupadhyay <072bct517krishna@ioe.edu.np>
+Date:   Mon Jan 1 22:58:21 2018 +0545
+
+    Update README.md
+
+[33mcommit 6d93dab7857aa0af7d2038a055b2202c2770dc7c[m
+Author: mrkrishnaupadhyay <072bct517krishna@ioe.edu.np>
+Date:   Mon Jan 1 22:39:17 2018 +0545
+
+    Create requirements.txt
+    
+    Requirements for this project.
+    sudo pip install -r requirements.txt
+
+[33mcommit bb39ed1d6557ebacc891a16a1b158112c0186214[m
+Author: Anish Bhusal <072bct505anish@ioe.edu.np>
+Date:   Mon Jan 1 22:15:06 2018 +0545
+
+    Update README.md
+
+[33mcommit 27b41a9e94eb155a0eb1b4c18b1baf100bd1857a[m
+Merge: 0a65de0 069a794
+Author: bhusal <bhusal.anish12@gmail.com>
+Date:   Mon Jan 1 22:11:01 2018 +0545
+
+    Merge https://github.com/24coder/Hotel-Management-System
+
+[33mcommit 069a7945716909b96d7c1e3ede11e54ff134972e[m
+Author: Anish Bhusal <072bct505anish@ioe.edu.np>
+Date:   Mon Jan 1 22:07:53 2018 +0545
+
+    Initial commit
+
+[33mcommit 0a65de00a40f7d1f8370234a8118c97c5055a983[m
+Author: bhusal <bhusal.anish12@gmail.com>
+Date:   Mon Jan 1 22:03:03 2018 +0545
+
+    installation working
