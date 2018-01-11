@@ -1,4 +1,61 @@
-{% extends "base.html" %}
+{% extends "main/base.html" %}
 {% block content %}
-    <h1>{{ message }}</h1>
+<!--Navbar-->
+<div class="container">
+<nav class="navbar navbar-toggleable-md fixed-top">
+  <a class="navbar-brand"  href="#">HOTEL MANAGEMENT SYSTEM</a>
+  <button class="btn btn-success" type="submit">Log Out</button>
+</nav>
+</div>
+
+<!-- Sidebar-->
+<!--Start of sidebar container -->
+
+<div class="container">
+<div class="row">
+  <div class="wrapper">
+        <div class="side-bar">
+              <ul>
+                  <li class="menu-head">
+
+                  </li>
+                  <div class="menu">
+                      <li>
+                          <a href="#">Hotel Status</a>
+                      </li>
+                      <li>
+                          <a href="#">Reservations</a>
+                      </li>
+                      <li>
+                          <a href="#" class="active">Guests</span></a>
+                      </li>
+                      <li>
+                          <a href="#">Rooms</a>
+                      </li>
+                      <li>
+                          <a href="#">To Do</a>
+                      </li>
+                      <li>
+                          <a href="#">Checkout</a>
+                      </li>
+                      <li>
+                          <a href="#">Customer Feedbacks</a>
+                      </li>
+                  </div>
+
+              </ul>
+        </div>
+        <div class="content">
+              <div class="col-md-12">
+                  <div class="panel panel-default">
+                      <!--<h1>Opening Soon </h1>
+                      -->
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+<!--end of container block -->
 {% endblock %}
