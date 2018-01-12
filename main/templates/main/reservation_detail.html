@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content-title %}
+    <h1>Reservation No: {{ reservation.reservation_id }}</h1>
+{% endblock %}
+{% block main-content %}
+    Customer: <a href="{% url 'customer-detail' reservation.customer_id %}">{{ reservation.customer }}</a> <br/>
+    Staff: <a href="{% url 'staff-detail' reservation.staff_id %}">{{ reservation.staff }}</a><br/>
+    No of Children: {{ reservation.no_of_children }}<br/>
+    No of Adults: {{ reservation.no_of_adults }}<br/>
+    Reservation Date: {{ reservation.reservation_date_time }}<br/>
+    Expected Arrival: {{ reservation.expected_arrival_date_time }}<br/>
+    Expected Departure: {{ reservation.expected_departure_date_time }}<br/>
+{% endblock %}

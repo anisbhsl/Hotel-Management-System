@@ -1,21 +1,27 @@
 {% extends "base.html" %}
 
-{% block sidebar-content-detail %}
-    <h1>Book List</h1>
-
+{% block main-content %}
     {% if room_list %}
-    <ul>
-
-      {% for room in room_list %}
-      <li>
-        <a href="{{ room.get_absolute_url }}">{{ room.room_no }}</a> ({{room.availability}})
-      </li>
-      {% endfor %}
-
-    </ul>
-
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Room No</th>
+                <th>Room Type</th>
+                <th>Availability</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for room in room_list %}
+                <tr>
+                    <td><a href="{% url 'room-detail' room.room_no %}"> {{ room.room_no }}</a></td>
+                    <td>{{ room.get_room_type_display }}</td>
+                    <td>{{ room.availability|yesno:"Available,Not Available" }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     {% else %}
-      <p>There are no books in the library.</p>
-    {% endif %}       
+        <p>There are no rooms.</p>
+    {% endif %}
 {% endblock %}
 

@@ -29,10 +29,13 @@ class Customer(models.Model):
     last_name = models.CharField(max_length=50)
     contact_no = models.CharField(max_length=15)
     address = models.CharField(max_length=100)
-    email_address = models.EmailField(null=True)
+    email_address = models.EmailField(null=True, blank=True)
 
     class Meta:
         ordering = ['first_name', 'last_name']
+
+    def get_absolute_url(self):
+        return reverse('customer-detail', args=str([self.customer_id]))
 
     def __str__(self):
         return '({0}) {1} {2}'.format(self.customer_id, self.first_name, self.last_name)
@@ -49,6 +52,9 @@ class Reservation(models.Model):
     reservation_date_time = models.DateTimeField(default=timezone.now)
     expected_arrival_date_time = models.DateTimeField(default=timezone.now)
     expected_departure_date_time = models.DateTimeField(default=timezone.now)
+
+    def get_absolute_url(self):
+        return reverse('reservation-detail', args=str([self.reservation_id]))
 
     def __str__(self):
         return '({0}) {1} {2}'.format(self.reservation_id, self.customer.first_name, self.customer.last_name)
@@ -81,8 +87,8 @@ class Room(models.Model):
     def __str__(self):
         return self.room_no
 
-    # def get_absolute_url(self):
-    #    return reverse('rooms', args=[str(self.room_no)])
+    def get_absolute_url(self):
+        return reverse('room-detail', args=[self.room_no])
 
     def save(self, *args, **kwargs):  # Overriding default behaviour of save
         if self.reservation:  # If it is reserved, than it should not be available
@@ -91,4 +97,3 @@ class Room(models.Model):
             self.availability = 1
 
         super().save(*args, **kwargs)
-
