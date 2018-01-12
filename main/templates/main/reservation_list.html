@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block main-content %}
+    {% if reservation_list %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Reservation ID</th>
+                <th>Customer</th>
+                <th>Staff</th>
+                <th>No of Children</th>
+                <th>No of Adults</th>
+                <th>Reservation Date Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for reservation in reservation_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'reservation-detail' reservation.reservation_id %}"> {{ reservation.reservation_id }}</a>
+                    </td>
+                    <td>{{ reservation.customer }}</td>
+                    <td>{{ reservation.staff }}</td>
+                    <td>{{ reservation.no_of_children }}</td>
+                    <td>{{ reservation.no_of_adults }}</td>
+                    <td>{{ reservation.reservation_date_time }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no reservations.</p>
+    {% endif %}
+{% endblock %}

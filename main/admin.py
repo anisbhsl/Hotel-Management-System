@@ -93,3 +93,4 @@ class RoomAdmin(admin.ModelAdmin):
         'reservation__customer__first_name',
         'reservation__customer__last_name',
     ]
+
