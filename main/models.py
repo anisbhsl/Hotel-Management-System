@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 
@@ -80,6 +81,9 @@ class Room(models.Model):
     def __str__(self):
         return self.room_no
 
+    # def get_absolute_url(self):
+    #    return reverse('rooms', args=[str(self.room_no)])
+
     def save(self, *args, **kwargs):  # Overriding default behaviour of save
         if self.reservation:  # If it is reserved, than it should not be available
             self.availability = 0
@@ -87,3 +91,4 @@ class Room(models.Model):
             self.availability = 1
 
         super().save(*args, **kwargs)
+
