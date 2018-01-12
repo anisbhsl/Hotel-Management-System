@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block sidebar-content-detail %}
+    <h1>Book List</h1>
+
+    {% if room_list %}
+    <ul>
+
+      {% for room in room_list %}
+      <li>
+        <a href="{{ room.get_absolute_url }}">{{ room.room_no }}</a> ({{room.availability}})
+      </li>
+      {% endfor %}
+
+    </ul>
+
+    {% else %}
+      <p>There are no books in the library.</p>
+    {% endif %}       
+{% endblock %}
+

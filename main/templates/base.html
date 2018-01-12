@@ -10,8 +10,92 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-{% block content %}
+{% block navigation_bar %}
+    <!--Navbar-->
+    <div class="container">
+        <nav class="navbar navbar-toggleable-md fixed-top">
+            <a class="navbar-brand" href="{% url 'index' %}">HOTEL MANAGEMENT SYSTEM</a>
+            <button class="btn btn-success" type="submit">Log Out</button>
+        </nav>
+    </div>
 {% endblock %}
+{% block content %}
+    <!-- Sidebar-->
+    <!--Start of sidebar container -->
+    {% block sidebar %}
+        <div class="container">
+        <div class="row">
+        <div class="wrapper">
+        <div class="side-bar">
+            <ul>
+                <li class="menu-head">
+
+                </li>
+                <div class="menu">
+                    <!-- sidebar items lists -->
+
+                    <li>
+                        <a href='#'>Hotel Status</a>
+                    </li>
+                    <li>
+                        <a href='#'>Reservations</a>
+                    </li>
+                    <li>
+                        <a href='#'>Guests</a>
+                    </li>
+                    <li>
+                        <a href='{% url 'rooms' %}'>Rooms</a>
+                    </li>
+                    <li>
+                        <a href='#'>To Do</a>
+                    </li>
+                    <li>
+                        <a href='#'>Checkout</a>
+                    </li>
+                    <li>
+                        <a href='#'>Customer Feedbacks</a>
+                    </li>
+
+                    <!-- sidebar items lists end -->
+                </div>
+
+            </ul>
+        </div>
+    {% endblock %}
+{% block sidebar-content-detail %}
+    <div class="content">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <!--<h1>Opening Soon </h1>
+                -->
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    </div>
+{% endblock %}
+    <!--end of container block -->
+    {% block pagination %}
+        {% if is_paginated %}
+            <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+            </div>
+        {% endif %}
+    {% endblock %}
+{% endblock %}
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
