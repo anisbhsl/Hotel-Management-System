@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content-title %}
+    <h1>Room {{ room.room_no }}</h1>
+{% endblock %}
+{% block main-content %}
+    Room No: {{ room.room_no }} <br/>
+    Room Type: {{ room.get_room_type_display }} <br/>
+    Availability : {% if room.availability %} Yes {% else %} No {% endif %} <br/>
+    Room Photo: "Not Available" <!--TODO: Image adding --> <br/>
+    {% if room.reservation %}
+        Reservation by:
+        <a href="{% url 'reservation-detail' room.reservation_id %}">{{ room.reservation.customer }} </a><br/>
+    {% endif %}
+{% endblock %}
