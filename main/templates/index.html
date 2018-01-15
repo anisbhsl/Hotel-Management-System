@@ -2,6 +2,16 @@
 {% block content-title %}
     <h1>{{ title }}</h1>
 {% endblock %}
+<!-- ToDo Work on FrontEnd -->
 {% block main-content %}
-    This is Hotel Management System.
+    Total Number of Rooms: {{ total_num_rooms }} <br/>
+    Available Number of Rooms: {{ available_num_rooms }} <br/>
+    Total Number of Reservations: {{ total_num_reservations }} <br/>
+    Total Number of Staffs: {{ total_num_staffs }} <br/>
+    Total Number of Customers: {{ total_num_customers }} <br/>
+    Last Reserved By: <br/>
+    Customer ID:
+    <a href="{% url 'customer-detail' last_reserved_by.customer_id %}"> {{ last_reserved_by.customer_id }}</a> <br/>
+    Customer Name: {{ last_reserved_by.customer.first_name }} {{ last_reserved_by.customer.last_name }} <br/>
+
 {% endblock %}

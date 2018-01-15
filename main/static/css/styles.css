@@ -46,6 +46,14 @@ h1 {
     border-radius: 0;
 }
 
+.fa-check-circle{
+    color: #428bca;
+}
+
+.fa-times-circle{
+    color: #d9534f;
+}
+
 /*
  * Dashboard
  */

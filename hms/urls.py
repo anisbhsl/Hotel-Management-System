@@ -15,10 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('main/', include('main.urls')),  # Added url pattern for main app
-    path('', RedirectView.as_view(url='/main/', permanent=True)),
+    path('', include('main.urls')),  # Added url pattern for main app
+    # path('reserve/', include('reserve.urls')),
 ]

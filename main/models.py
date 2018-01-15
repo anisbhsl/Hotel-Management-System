@@ -35,6 +35,11 @@ class Customer(models.Model):
         ordering = ['first_name', 'last_name']
 
     def get_absolute_url(self):
+        """
+        This generates the url for customer detail.
+        'customer-detail' is the name of the url.
+        Takes argument customer_id
+        """
         return reverse('customer-detail', args=str([self.customer_id]))
 
     def __str__(self):
@@ -75,6 +80,7 @@ class Room(models.Model):
     room_type = models.CharField(max_length=2, choices=ROOM_CHOICES, default=SIMPLE)
     availability = models.BooleanField(default=0)
     reservation = models.ForeignKey(Reservation, null=True, blank=True, on_delete=models.CASCADE)
+    facility = models.ManyToManyField('Facility')
 
     # customer = models.ForeignKey(Reservation, null=True, blank=True, on_delete=models.CASCADE,
     #                            related_name='%(class)s_customer')
@@ -87,6 +93,15 @@ class Room(models.Model):
     def __str__(self):
         return self.room_no
 
+    def display_facility(self):
+        """
+        This function should be defined since facility is many-to-many relationship
+        It cannot be displayed directly on the admin panel for list_display
+        """
+        return ', '.join([facility.name for facility in self.facility.all()])
+
+    display_facility.short_description = 'Facilities'
+
     def get_absolute_url(self):
         return reverse('room-detail', args=[self.room_no])
 
@@ -97,3 +112,14 @@ class Room(models.Model):
             self.availability = 1
 
         super().save(*args, **kwargs)
+
+
+@python_2_unicode_compatible
+class Facility(models.Model):
+    name = models.CharField(max_length=10)
+
+    class Meta:
+        verbose_name_plural = 'Facilities'  # Otherwise admin panel shows Facilitys
+
+    def __str__(self):
+        return self.name
