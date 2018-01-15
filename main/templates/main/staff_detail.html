@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 {% block content-title %}
-    <h1>Staff Information</h1>
+    <h1>{{ title }}</h1>
 {% endblock %}
+<!-- TODO Work on FrontEnd -->
 {% block main-content %}
-    Staff Id:
+    Id: {{ staff.staff_id }} <br/>
+    First Name: {{ staff.first_name }} <br/>
+    Last Name: {{ staff.last_name }} <br/>
+    Contact No: {{ staff.contact_no }} <br/>
+    Address: {{ staff.address }} <br/>
+    <!-- Only if staff has email -->
+    {% if staff.email_address %}Email Address: {{ staff.email_address }} {% endif %}<br/>
 {% endblock %}

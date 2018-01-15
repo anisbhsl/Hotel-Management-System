@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 {% block content-title %}
-    <h1>Customer Information: </h1>
+    <h1>{{ title }}</h1>
 {% endblock %}
+<!-- TODO Work on FrontEnd -->
 {% block main-content %}
-    Customer Id:
+    Id: {{ customer.customer_id }} <br/>
+    First Name: {{ customer.first_name }} <br/>
+    Last Name: {{ customer.last_name }} <br/>
+    Contact No: {{ customer.contact_no }} <br/>
+    Address: {{ customer.address }} <br/>
+    <!-- Only if customer has email -->
+    {% if customer.email_address %}Email Address: {{ customer.email_address }} {% endif %}<br/>
 {% endblock %}

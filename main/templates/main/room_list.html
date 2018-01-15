@@ -3,7 +3,7 @@
 {% block main-content %}
     {% if room_list %}
         <table class="table table-hover">
-            <thead>
+            <thead class="thead-light">
             <tr>
                 <th>Room No</th>
                 <th>Room Type</th>
@@ -15,7 +15,10 @@
                 <tr>
                     <td><a href="{% url 'room-detail' room.room_no %}"> {{ room.room_no }}</a></td>
                     <td>{{ room.get_room_type_display }}</td>
-                    <td>{{ room.availability|yesno:"Available,Not Available" }}</td>
+                    <td>{% if room.availability %}
+                        <span class="fa fa-check-circle" aria-hidden="true"> Available</span> {% else %}
+                        <span class="fa fa-times-circle" aria-hidden="true"> Not Available</span>{% endif %}</td>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -7,6 +7,7 @@ from .models import *
 
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
+    # To show in admin app
     list_display = (
         'staff_id',
         'first_name',
@@ -15,6 +16,7 @@ class StaffAdmin(admin.ModelAdmin):
         'address',
         'email_address',
     )
+    # Adding search bar
     search_fields = [
         'staff_id',
         'first_name',
@@ -23,7 +25,7 @@ class StaffAdmin(admin.ModelAdmin):
         'address',
         'email_address',
     ]
-
+    # Categorizing the fields
     fieldsets = (
         (None, {
             'fields': ('staff_id', ('first_name', 'last_name'),)
@@ -84,13 +86,19 @@ class RoomAdmin(admin.ModelAdmin):
         'room_type',
         'reservation',
         'availability',
+        'display_facility',
         # 'customer',
         # 'staff'
     )
+    # Adding filter
     list_filter = ('room_type', 'availability')
-    fields = (('room_no', 'room_type'), 'reservation')
+    fields = (('room_no', 'room_type'), 'reservation', 'facility')
     search_fields = [
         'reservation__customer__first_name',
         'reservation__customer__last_name',
     ]
 
+
+@admin.register(Facility)
+class FacilityAdmin(admin.ModelAdmin):
+    list_display = ('name',)

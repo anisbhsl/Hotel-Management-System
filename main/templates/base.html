@@ -6,30 +6,34 @@
     <meta name="description" content="This is internal hotel management system">
     <meta name="author" content="Software Engineers' Group">
     <!-- <link rel="icon" href="../../../../favicon.ico"> -->
-
+    <!-- Title -------------- -->
     <title>{{ title }}</title>
-
+    <-- --------------------- -->
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
           integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 
-    <!-- Custom styles for this template -->
+    <!-- --------------Custom styles-------------------------------- -->
     {% load static %}
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <!-- ----------------------------------------------------------- -->
 </head>
 
 <body>
+<!-- --------------------------Header ----------------------------------- -->
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <!-- --------------Navigation Bar--------------------- -->
         <a class="navbar-brand" href="{% url 'index' %}">Hotel Management System</a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse"
                 data-target="#top_navbar" aria-controls="top_navbar" aria-expanded="false"
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+        <!-- ------------------------------------------------------------- -->
         <div class="collapse navbar-collapse justify-content-end" id="top_navbar">
             <ul class="navbar-nav">
+                <!-- -------------------Navigation Items--------------- -->
                 {% block navbar-items %}
                     <li class="nav-item">
                         <a class="nav-link" href="#">Profile</a>
@@ -38,34 +42,38 @@
                         <a class="nav-link" href="#">Help</a>
                     </li>
                 {% endblock %}
+                <!-- ----------------------------------------------------- -->
             </ul>
         </div>
     </nav>
 </header>
-
+<!-- ------------------------------------------------------------------- -->
 
 <div class="container-fluid">
     <div class="row">
+        <!-- ---------------------Sidebar Navigation------------------------- -->
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+            <!-- --------------Sidebar Items------------------ -->
             {% block sidebar-items %}
                 <ul class="nav nav-pills flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Hotel Status</a>
+                        <a class="nav-link {{ active_state }}" href="{% url 'index' %}">Hotel
+                            Status</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'reservations' %}">Reservations</a>
+                        <a class="nav-link {{ active_state }}" href="{% url 'reservations' %}">Reservations</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Guests</a>
+                        <a class="nav-link {{ active_state }}" href="#">Guests</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'rooms' %}">Rooms</a>
+                        <a class="nav-link {{ active_state }}" href="{% url 'rooms' %}">Rooms</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">To Do</a>
+                        <a class="nav-link {{ active_state }}" href="#">To Do</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Checkout</a>
+                        <a class="nav-link {{ active_state }}" href="#">Checkout</a>
                     </li>
                 </ul>
 
@@ -75,42 +83,60 @@
                     </li>
                 </ul>
             {% endblock %}
+            <!-- ---------------------------------------------------------------- -->
         </nav>
+        <!-- ---------------------------------------------------------------------------- -->
 
+        <!-- -------------------------Main Body Content---------------------- -->
         <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+            <!-- ---------Content Heading----------- -->
             {% block content-title %}
                 <h1>{{ title }}</h1>
             {% endblock %}
+            <!-- ------------------------------------ -->
+
+            <!-- Content for the heading previously mentioned -->
             {% block main-content %}
                 <section class="row text-center placeholders">
                 </section>
             {% endblock %}
+            <!-- --------------------------------------------------- -->
+
+            <!-- --------------Paginator--------------- -->
             {% block pagination %}
+                <!-- Only shows paginator if the page is paginated -->
                 {% if is_paginated %}
                     <nav aria-label="Page Navigation">
-                    <ul class="pagination">
-                        {% if page_obj.has_previous %}
-                            <li class="page-item"><a class="page-link"
-                                                     href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a>
-                            </li>
-                        {% endif %}
-                        {% for page_no in page_obj.paginator.page_range %}
-                            <li class="page-item {% if page_no == page_obj.number %} active {% endif %}"><a
-                                    class="page-link"
-                                    href="{{ request.path }}?page={{ page_no }}">{{ page_no }}</a></li>
-                        {% endfor %}
-
-                        {% if page_obj.has_next %}
-                            <li class="page-item"><a class="page-link"
-                                                     href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a>
-                            </li>
-                        {% endif %}
-
-                    </ul>
+                        <ul class="pagination">
+                        <!-- Only shows previous button when it has previous -->
+                            {% if page_obj.has_previous %}
+                                <!-- Code for previous page -->
+                                <!-- {{ page_obj.previous_page_number }} is previous page number. -->
+                                <li class="page-item"><a class="page-link"
+                                                         href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a>
+                                </li>
+                            {% endif %}
+                        <!-- Pagination Numbers -->
+                            {% for page_no in page_obj.paginator.page_range %}
+                                <li class="page-item {% if page_no == page_obj.number %} active {% endif %}"><a
+                                        class="page-link"
+                                        href="{{ request.path }}?page={{ page_no }}">{{ page_no }}</a></li>
+                            {% endfor %}
+                        <!-- ------------------ --->
+                        <!-- Only shows next button if it has next page -->
+                            {% if page_obj.has_next %}
+                                <!-- {{ page_obj.next_page_number }} is next page. -->
+                                <li class="page-item"><a class="page-link"
+                                                         href="{{ request.path }}?page={{ page_obj.next_page_number }}">Next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
                 {% endif %}
-            </nav>
+                <!-- --------------------------------------------------------- -->
             {% endblock %}
         </main>
+        <!-- -------------------------------------------------------------------------------------->
     </div>
 </div>
 
@@ -127,5 +153,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
         integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
         crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/c76346d885.js"></script>
 </body>
 </html>
