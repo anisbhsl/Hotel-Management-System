@@ -10,7 +10,7 @@
     Facilities: {{ room.display_facility }} <br/>
     Room Photo: "Not Available" <!--TODO: Image adding --> <br/>
     {% if room.reservation %}
-        Reservation by:
-        <a href="{% url 'reservation-detail' room.reservation_id %}">{{ room.reservation.customer }} </a><br/>
+        Reservation:
+        <a href="{% url 'reservation-detail' room.reservation_id %}">{{ room.reservation }} </a><br/>
     {% endif %}
 {% endblock %}

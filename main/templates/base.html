@@ -82,6 +82,21 @@
                         <a class="nav-link" href="#">Customer Feedback</a>
                     </li>
                 </ul>
+                <ul class="nav nav-pills flex-column">
+                    {% block login-status %}
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">{{ user.first_name }} {{ user.last_name }}</a>
+                                <a class="nav-link" href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
+                            </li>
+                        {% else %}
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">Login</a>
+                            </li>
+                        {% endif %}
+                    {% endblock %}
+                </ul>
             {% endblock %}
             <!-- ---------------------------------------------------------------- -->
         </nav>
@@ -108,7 +123,7 @@
                 {% if is_paginated %}
                     <nav aria-label="Page Navigation">
                         <ul class="pagination">
-                        <!-- Only shows previous button when it has previous -->
+                            <!-- Only shows previous button when it has previous -->
                             {% if page_obj.has_previous %}
                                 <!-- Code for previous page -->
                                 <!-- {{ page_obj.previous_page_number }} is previous page number. -->
@@ -116,14 +131,14 @@
                                                          href="{{ request.path }}?page={{ page_obj.previous_page_number }}">Previous</a>
                                 </li>
                             {% endif %}
-                        <!-- Pagination Numbers -->
+                            <!-- Pagination Numbers -->
                             {% for page_no in page_obj.paginator.page_range %}
                                 <li class="page-item {% if page_no == page_obj.number %} active {% endif %}"><a
                                         class="page-link"
                                         href="{{ request.path }}?page={{ page_no }}">{{ page_no }}</a></li>
                             {% endfor %}
-                        <!-- ------------------ --->
-                        <!-- Only shows next button if it has next page -->
+                            <!-- ------------------ --->
+                            <!-- Only shows next button if it has next page -->
                             {% if page_obj.has_next %}
                                 <!-- {{ page_obj.next_page_number }} is next page. -->
                                 <li class="page-item"><a class="page-link"
