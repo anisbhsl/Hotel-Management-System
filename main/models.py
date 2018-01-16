@@ -16,6 +16,7 @@ class Staff(models.Model):
 
     class Meta:
         ordering = ['first_name', 'last_name']
+        permissions = (("can_view_staff", "Can view staff"), ('can_view_staff_detail', 'Can view staff detail'))
 
     def __str__(self):  # Unicode support
         return '({0}) {1} {2}'.format(self.staff_id, self.first_name, self.last_name)
@@ -33,6 +34,7 @@ class Customer(models.Model):
 
     class Meta:
         ordering = ['first_name', 'last_name']
+        permissions = (('can_view_customer', 'Can view customer'),)
 
     def get_absolute_url(self):
         """
@@ -57,6 +59,10 @@ class Reservation(models.Model):
     reservation_date_time = models.DateTimeField(default=timezone.now)
     expected_arrival_date_time = models.DateTimeField(default=timezone.now)
     expected_departure_date_time = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        permissions = (('can_view_reservation', 'Can view reservation'),
+                       ('can_view_reservation_detail', 'Can view reservation detail'),)
 
     def get_absolute_url(self):
         return reverse('reservation-detail', args=str([self.reservation_id]))
@@ -89,6 +95,7 @@ class Room(models.Model):
 
     class Meta:
         ordering = ['room_no', ]
+        permissions = (('can_view_room', 'Can view room'),)
 
     def __str__(self):
         return self.room_no

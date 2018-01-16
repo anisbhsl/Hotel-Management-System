@@ -23,6 +23,8 @@
             {% endfor %}
             </tbody>
         </table>
+        <p>Filter By: <a href="{% url 'rooms' %}?filter={% if filter == 'all' %}avail{% else %}all{% endif %}">
+            {% if filter == 'all' %}Available{% else %}All{% endif %}</a></p>
     {% else %}
         <p>There are no rooms.</p>
     {% endif %}
