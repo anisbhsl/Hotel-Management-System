@@ -12,9 +12,10 @@
     Expected Arrival: {{ reservation.expected_arrival_date_time }}<br/>
     Expected Departure: {{ reservation.expected_departure_date_time }}<br/>
     {% if reservation.room_set.all %}
-    Reserved Rooms:
-    {% for room in reservation.room_set.all %}
-        <strong><a href="{% url 'room-detail' room.room_no %}">{{ room }}</a>{% if not forloop.last %}, {% endif %}</strong>
-    {% endfor %}
+        Reserved Rooms:
+        {% for room in reservation.room_set.all %}
+            <strong><a href="{% url 'room-detail' room.room_no %}">{{ room }}</a>{% if not forloop.last %}
+                , {% endif %}</strong>
+        {% endfor %}
     {% endif %}
 {% endblock %}
