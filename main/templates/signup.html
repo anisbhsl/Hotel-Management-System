@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content-title %}
+    <h1>Signup Form</h1>
+{% endblock %}
+{% block sidebar %}
+{% endblock %}
+{% block main-content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <fieldset class="fieldset">
+            <legend class="legend">Personal Information for Verification</legend>
+            <div class="form-row align-items-center">
+                <div class="form-group col-auto">
+                    {{ form.staff_id.errors }}
+                    <label for="{{ form.staff_id.id_for_label }}">ID</label>{{ form.staff_id }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ form.first_name.errors }}
+                    <label for="{{ form.first_name.id_for_label }}">First Name</label>{{ form.first_name }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ form.middle_name.errors }}
+                    <label for="{{ form.middle_name.id_for_label }}">Middle Name</label>{{ form.middle_name }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ form.last_name.errors }}
+                    <label for="{{ form.last_name.id_for_label }}">Last Name</label>{{ form.last_name }}
+                </div>
+            </div>
+            <div class="form-row align-items-center">
+                <div class="form-group col-auto">
+                    {{ form.email.errors }}
+                    <label for="{{ form.email.id_for_label }}">Email ID</label>{{ form.email }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ form.first_name.errors }}
+                    <label for="{{ form.contact_no.id_for_label }}">Contact Number</label>{{ form.contact_no }}
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="legend">New Account Information</legend>
+            <div class="form-row align-items-center">
+                <div class="form-group col-auto">
+                    {{ form.username.errors }}
+                    <label for="{{ form.username.id_for_label }}">Username</label>{{ form.username }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ form.password1.errors }}
+                    <label for="{{ form.password1.id_for_label }}">Password</label>{{ form.password1 }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ form.password2.errors }}
+                    <label for="{{ form.password2.id_for_label }}">Password Confirmation</label>{{ form.password2 }}
+                </div>
+            </div>
+        </fieldset>
+
+        <input type="submit" value="Submit"/>
+    </form>
+{% endblock %}

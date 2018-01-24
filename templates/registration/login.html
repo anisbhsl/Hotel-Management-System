@@ -7,7 +7,7 @@
 {% block main-content %}
 
     {% if form.errors %}
-        <p>Username and password didn't match. Please Try Again</p>
+        <p class="notMatched">Username and password didn't match. Please Try Again.</p>
     {% endif %}
     {% if next %}
         {% if user.is_authenticated %}
@@ -18,18 +18,15 @@
     {% endif %}
     <form method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        <table>
-            <tr>
-                <td>{{ form.username.label_tag }}</td>
-                <td>{{ form.username }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.password.label_tag }}</td>
-                <td>{{ form.password }}</td>
-            </tr>
-        </table>
-
-        <input type="submit" value="login"/>
+        <div class="form-row align-items-center">
+            <div class="form-group col-auto">
+                <label for="{{ form.username.id_for_label }}">Username</label>{{ form.username }}
+            </div>
+            <div class="form-group col-auto">
+                <label for="{{ form.password.id_for_label }}">Password</label>{{ form.password }}
+            </div>
+        </div>
+        <input type="submit" value="Login"/>
         <input type="hidden" name="next" value="{{ next }}"/>
     </form>
 

@@ -10,7 +10,9 @@ class StaffAdmin(admin.ModelAdmin):
     # To show in admin app
     list_display = (
         'staff_id',
+        'user',
         'first_name',
+        'middle_name',
         'last_name',
         'contact_no',
         'address',
@@ -19,7 +21,9 @@ class StaffAdmin(admin.ModelAdmin):
     # Adding search bar
     search_fields = [
         'staff_id',
+        'user',
         'first_name',
+        'middle_name',
         'last_name',
         'contact_no',
         'address',
@@ -28,7 +32,7 @@ class StaffAdmin(admin.ModelAdmin):
     # Categorizing the fields
     fieldsets = (
         (None, {
-            'fields': ('staff_id', ('first_name', 'last_name'),)
+            'fields': (('first_name', 'middle_name', 'last_name'),)
         }),
         ('Contact Information', {
             'fields': (('contact_no', 'email_address'), 'address')
@@ -41,6 +45,7 @@ class CustomerAdmin(admin.ModelAdmin):
     list_display = (
         'customer_id',
         'first_name',
+        'middle_name',
         'last_name',
         'contact_no',
         'address',
@@ -49,6 +54,7 @@ class CustomerAdmin(admin.ModelAdmin):
     search_fields = [
         'customer_id',
         'first_name',
+        'middle_name',
         'last_name',
         'contact_no',
         'address',
@@ -57,7 +63,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': (('first_name', 'last_name'),)
+            'fields': (('first_name', 'middle_name', 'last_name'),)
         }),
         ('Contact Information', {
             'fields': (('contact_no', 'email_address'), 'address')
@@ -87,14 +93,13 @@ class RoomAdmin(admin.ModelAdmin):
         'reservation',
         'availability',
         'display_facility',
-        # 'customer',
-        # 'staff'
     )
     # Adding filter
     list_filter = ('room_type', 'availability')
     fields = (('room_no', 'room_type'), 'reservation', 'facility')
     search_fields = [
         'reservation__customer__first_name',
+        'reservation__customer__middle_name',
         'reservation__customer__last_name',
     ]
 
