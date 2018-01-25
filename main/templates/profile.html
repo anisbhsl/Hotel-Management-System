@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content-title %}
+    <h1>Profile Information</h1>
+{% endblock %}
+{% block main-content %}
+    Username: {{ user_information.username }}<br/>
+    Name: {{ information.first_name }} {{ information.middle_name }} {{ information.last_name }}<br/>
+    Contact No: {{ information.contact_no }}<br/>
+    Email: {{ information.email_address }}<br/>
+    Address: {{ information.address }}<br/>
+{% endblock %}

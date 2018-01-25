@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -7,15 +8,17 @@ from django.utils.encoding import python_2_unicode_compatible
 @python_2_unicode_compatible
 class Staff(models.Model):
     """ Model for staffs """
-    staff_id = models.CharField(max_length=10, primary_key=True)
+    staff_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50, null=False, blank=True)
     last_name = models.CharField(max_length=50)
     contact_no = models.CharField(max_length=15)
     address = models.CharField(max_length=100)
     email_address = models.EmailField()
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, editable=False)
 
     class Meta:
-        ordering = ['first_name', 'last_name']
+        ordering = ['first_name', 'middle_name', 'last_name']
         permissions = (("can_view_staff", "Can view staff"), ('can_view_staff_detail', 'Can view staff detail'))
 
     def __str__(self):  # Unicode support
@@ -27,13 +30,14 @@ class Customer(models.Model):
     """Model for customers"""
     customer_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=50)
+    middle_name = models.CharField(max_length=50, null=False, blank=True)
     last_name = models.CharField(max_length=50)
     contact_no = models.CharField(max_length=15)
     address = models.CharField(max_length=100)
     email_address = models.EmailField(null=True, blank=True)
 
     class Meta:
-        ordering = ['first_name', 'last_name']
+        ordering = ['first_name', 'middle_name', 'last_name']
         permissions = (('can_view_customer', 'Can view customer'),)
 
     def get_absolute_url(self):
@@ -52,8 +56,8 @@ class Customer(models.Model):
 class Reservation(models.Model):
     """Models for reservations"""
     reservation_id = models.AutoField(primary_key=True)
-    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, related_name='%(class)s_customer')
-    staff = models.ForeignKey(Staff, on_delete=models.DO_NOTHING, related_name='%(class)s_staff')
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE, editable=False)
     no_of_children = models.PositiveSmallIntegerField(default=0)
     no_of_adults = models.PositiveSmallIntegerField(default=1)
     reservation_date_time = models.DateTimeField(default=timezone.now)
@@ -87,11 +91,6 @@ class Room(models.Model):
     availability = models.BooleanField(default=0)
     reservation = models.ForeignKey(Reservation, null=True, blank=True, on_delete=models.CASCADE)
     facility = models.ManyToManyField('Facility')
-
-    # customer = models.ForeignKey(Reservation, null=True, blank=True, on_delete=models.CASCADE,
-    #                            related_name='%(class)s_customer')
-    # staff = models.ForeignKey(Reservation, null=True, blank=True, on_delete=models.CASCADE,
-    #                          related_name='%(class)s_staff')
 
     class Meta:
         ordering = ['room_no', ]

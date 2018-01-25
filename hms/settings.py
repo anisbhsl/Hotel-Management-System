@@ -53,7 +53,7 @@ ROOT_URLCONF = 'hms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['./templates',],
+        'DIRS': ['./templates', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -111,11 +111,12 @@ USE_TZ = True
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
-
+LOGOUT_REDIRECT_URL = '/'
 # For password reset
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# For session expire
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

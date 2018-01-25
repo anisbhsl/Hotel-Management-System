@@ -8,10 +8,10 @@
     <!-- <link rel="icon" href="../../../../favicon.ico"> -->
     <!-- Title -------------- -->
     <title>{{ title }}</title>
-    <-- --------------------- -->
+    <!-- --------------------- -->
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
-          integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- --------------Custom styles-------------------------------- -->
     {% load static %}
@@ -35,9 +35,11 @@
             <ul class="navbar-nav">
                 <!-- -------------------Navigation Items--------------- -->
                 {% block navbar-items %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Profile</a>
-                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="#">Help</a>
                     </li>
@@ -51,55 +53,60 @@
 
 <div class="container-fluid">
     <div class="row">
-        <!-- ---------------------Sidebar Navigation------------------------- -->
-        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
-            <!-- --------------Sidebar Items------------------ -->
-            {% block sidebar-items %}
-                <ul class="nav nav-pills flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_state }}" href="{% url 'index' %}">Hotel
-                            Status</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_state }}" href="{% url 'reservations' %}">Reservations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_state }}" href="#">Guests</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_state }}" href="{% url 'rooms' %}">Rooms</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_state }}" href="#">To Do</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ active_state }}" href="#">Checkout</a>
-                    </li>
-                </ul>
+        {% block sidebar %}
+            <!-- ---------------------Sidebar Navigation------------------------- -->
+            <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+                <!-- --------------Sidebar Items------------------ -->
+                {% block sidebar-items %}
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Hotel
+                                Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'reservations' %}">Reservations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Guests</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'rooms' %}">Rooms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">To Do</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Checkout</a>
+                        </li>
+                    </ul>
 
-                <ul class="nav nav-pills flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Customer Feedback</a>
-                    </li>
-                </ul>
-                <ul class="nav nav-pills flex-column">
-                    {% block login-status %}
-                        {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">{{ user.first_name }} {{ user.last_name }}</a>
-                                <a class="nav-link" href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
-                            </li>
-                        {% else %}
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">Login</a>
-                            </li>
-                        {% endif %}
-                    {% endblock %}
-                </ul>
-            {% endblock %}
-            <!-- ---------------------------------------------------------------- -->
-        </nav>
+                    <ul class="nav nav-pills flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Customer Feedback</a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-pills flex-column">
+                        {% block login-status %}
+                            {% if user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">{{ user.first_name }} {{ user.last_name }}</a>
+                                    <a class="nav-link" href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'signup' %}?next={{ request.path }}">Don't have an
+                                        account?</a>
+                                </li>
+                            {% endif %}
+                        {% endblock %}
+                    </ul>
+                {% endblock %}
+                <!-- ---------------------------------------------------------------- -->
+            </nav>
+        {% endblock %}
         <!-- ---------------------------------------------------------------------------- -->
 
         <!-- -------------------------Main Body Content---------------------- -->
@@ -169,5 +176,13 @@
         integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
         crossorigin="anonymous"></script>
 <script src="https://use.fontawesome.com/c76346d885.js"></script>
+<script>
+    $(window).on("load", function () {
+        if ($("form")) {
+            $("input[type!='submit']").addClass("form-control");
+            $("input[type='submit']").addClass("btn btn-primary")
+        }
+    });
+</script>
 </body>
 </html>
