@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content-title %}
+    <h1>Reservation Successful</h1>
+{% endblock %}
+{% block main-content %}
+    Reservation ID: {{ reservation.reservation_id }}<br/>
+    Customer: <a href="{% url 'customer-detail' reservation.customer.customer_id %}">{{ reservation.customer }}</a><br/>
+    Reserved by: <a href="{% url 'staff-detail' reservation.staff.staff_id %}">{{ reservation.staff }}</a><br/>
+{% endblock %}

@@ -1,5 +1,5 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import path
-from django.contrib.auth.decorators import permission_required
 
 from . import views
 
@@ -19,5 +19,6 @@ urlpatterns = [
     path('reservation/<str:pk>', views.ReservationDetailView.as_view(), name='reservation-detail'),
     path('customer/<str:pk>', views.CustomerDetailView.as_view(), name='customer-detail'),  # Detail of each customer
     path('staff/<str:pk>', views.StaffDetailView.as_view(), name='staff-detail'),  # Detail of staff
-    path('profile/', permission_required('main.can_view_room')(views.ProfileView.as_view()), name='profile')
+    path('profile/', login_required(views.ProfileView.as_view()), name='profile'),
+    path('reserve/', views.reserve, name='reserve'),  # For reservation
 ]

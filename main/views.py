@@ -1,13 +1,15 @@
-# from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
+from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ValidationError
+from django.db import transaction, IntegrityError
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404  # For displaying in template
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 
-from .forms import Signup
+from .forms import Signup, ReservationForm
 from .models import Room, Reservation, Customer, Staff  # Import Models
 
 
@@ -44,6 +46,7 @@ def index(request):
     )
 
 
+@transaction.atomic
 def signup(request):
     title = "Signup"
     if request.user.is_authenticated:
@@ -51,26 +54,83 @@ def signup(request):
     if request.method == 'POST':
         form = Signup(request.POST)
         if form.is_valid():
-            staffs_group = get_object_or_404(Group, name__iexact="Staffs")
-            form.save()
-            staff_id = form.cleaned_data['staff_id']
-            username = form.cleaned_data['username']
-            s = get_object_or_404(Staff, staff_id__exact=staff_id)
-            s.user = get_object_or_404(User, username__iexact=username)
-            s.user.set_password(form.cleaned_data['password1'])
-            s.user.groups.add(staffs_group)
-            s.user.save()
-            s.save()
-            return redirect('index')
+            try:
+                with transaction.atomic():
+                    staffs_group = get_object_or_404(Group, name__iexact="Staffs")
+                    form.save()
+                    staff_id = form.cleaned_data['staff_id']
+                    username = form.cleaned_data['username']
+                    s = get_object_or_404(Staff, staff_id__exact=staff_id)
+                    s.user = get_object_or_404(User, username__iexact=username)
+                    s.user.set_password(form.cleaned_data['password1'])
+                    s.user.groups.add(staffs_group)
+                    s.user.save()
+                    s.save()
+            except IntegrityError:
+                print("Couldn't add staff")
 
+            return redirect('index')
     else:
         form = Signup()
 
     return render(
         request,
-        'signup.html',
-        {'form': form, 'title': title},
+        'signup.html', {
+            'form': form, 'title': title},
     )
+
+
+@permission_required('main.add_reservation', 'login', raise_exception=True)
+@transaction.atomic
+def reserve(request):
+    title = "Add Reservation"
+    if request.method == 'POST':
+        reservation_form = ReservationForm(request.POST)
+        if reservation_form.is_valid():
+            try:
+                with transaction.atomic():
+                    customer = Customer(
+                        first_name=reservation_form.cleaned_data.get('first_name'),
+                        middle_name=reservation_form.cleaned_data.get('middle_name'),
+                        last_name=reservation_form.cleaned_data.get('last_name'),
+                        email_address=reservation_form.cleaned_data.get('email'),
+                        contact_no=reservation_form.cleaned_data.get('contact_no'),
+                        address=reservation_form.cleaned_data.get('address'),
+                    )
+                    customer.save()
+                    staff = request.user
+                    reservation = Reservation(
+                        staff=get_object_or_404(Staff, user=staff),
+                        customer=customer,
+                        no_of_children=reservation_form.cleaned_data.get('no_of_children'),
+                        no_of_adults=reservation_form.cleaned_data.get('no_of_adults'),
+                        expected_arrival_date_time=reservation_form.cleaned_data.get('expected_arrival_date_time'),
+                        expected_departure_date_time=reservation_form.cleaned_data.get('expected_departure_date_time'),
+                        reservation_date_time=timezone.now(),
+                    )
+                    reservation.save()
+            except IntegrityError:
+                print("Cannot make reservation.")
+            return render(
+                request,
+                'reserve_success.html', {
+                    'reservation': reservation,
+                }
+            )
+    else:
+        reservation_form = ReservationForm()
+
+    return render(
+        request,
+        'reserve.html', {
+            'title': title,
+            'reservation_form': reservation_form,
+        }
+    )
+
+
+def reserve_success(request):
+    pass
 
 
 # For generic ListView or DetailView, the default templates should be stored in templates/{{app_name}}/{{template_name}}
@@ -139,7 +199,7 @@ class ReservationListView(PermissionRequiredMixin, generic.ListView):
     # Here, the objects are displayed by reservation date time in descending order
     queryset = Reservation.objects.all().order_by('-reservation_date_time')
     title = _("Reservation List")
-    paginate_by = 3
+    paginate_by = 5
     permission_required = 'main.can_view_reservation'
     extra_context = {'title': title}
 
@@ -192,3 +252,46 @@ class ProfileView(generic.TemplateView):
         else:
             raise Http404("Your are not logged in.")
         return context
+
+
+"""
+@permission_required('main.add_reservation', 'login', raise_exception=True)
+@transaction.atomic
+def reserve(request):
+    title = "Add reservation"
+    if request.method == 'POST':
+        try:
+            with transaction.atomic():
+                reservation_form = ReservationForm(request.POST)
+                try:
+                    with transaction.atomic():
+                        customer = Customer(
+                            first_name=reservation_form.cleaned_data.get('first_name'),
+                            middle_name=reservation_form.cleaned_data.get('middle_name'),
+                            last_name=reservation_form.cleaned_data.get('last_name'),
+                            email_address=reservation_form.cleaned_data.get('email'),
+                            address=reservation_form.cleaned_data.get('address'),
+                        )
+                        customer.save()
+                except IntegrityError:
+                    print("Cannot add customer")
+
+                staff = request.user
+                reservation = reservation_form.save(commit=False)
+                reservation.staff = staff
+                reservation.customer = customer
+                reservation.reservation_date_time = timezone.now()
+                reservation.save()
+        except IntegrityError:
+            print("Cannot made reservation")
+
+    else:
+        reservation_form = ReservationForm()
+    return render(
+        request,
+        'reserve.html', {
+            'title': title,
+            'reservation_form': reservation_form,
+        }
+    )
+"""

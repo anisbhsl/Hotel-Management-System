@@ -1,3 +1,4 @@
+{% load i18n %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,7 +13,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- --------------Custom styles-------------------------------- -->
     {% load static %}
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
@@ -75,11 +76,20 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">To Do</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Checkout</a>
-                        </li>
                     </ul>
-
+                    {% if user.is_authenticated %}
+                        <ul class="nav nav-pills flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'reserve' %}">Reserve</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Check-in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Check-out</a>
+                            </li>
+                        </ul>
+                    {% endif %}
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
                             <a class="nav-link" href="#">Customer Feedback</a>
@@ -175,7 +185,12 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
         integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
         crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://use.fontawesome.com/c76346d885.js"></script>
+{% load static %}
+<script src="{% static 'js/script.js' %}"></script>
+{% block media-files %}
+{% endblock %}
 <script>
     $(window).on("load", function () {
         if ($("form")) {
