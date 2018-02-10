@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content-title %}
+    <h1>{{ title }}</h1>
+{% endblock %}
+{% block main-content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ reservation_form.non_field_errors }}
+        <fieldset class="fieldset">
+            <legend class="legend">Personal Information</legend>
+            <div class="form-row align-items-center">
+                <div class="form-group col-auto">
+                    {{ reservation_form.first_name.errors }}
+                    <label for="{{ reservation_form.first_name.id_for_label }}">First
+                        Name</label>{{ reservation_form.first_name }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ reservation_form.middle_name.errors }}
+                    <label for="{{ reservation_form.middle_name.id_for_label }}">Middle
+                        Name</label>{{ reservation_form.middle_name }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ reservation_form.last_name.errors }}
+                    <label for="{{ reservation_form.last_name.id_for_label }}">Last
+                        Name</label>{{ reservation_form.last_name }}
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="legend">Contact Information</legend>
+            <div class="form-row align-items-center">
+                <div class="form-group col-auto">
+                    {{ reservation_form.contact_no.errors }}
+                    <label for="{{ reservation_form.contact_no.id_for_label }}">Contact
+                        No</label>{{ reservation_form.contact_no }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ reservation_form.email.errors }}
+                    <label for="{{ reservation_form.email.id_for_label }}">Email</label>{{ reservation_form.email }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ reservation_form.address.errors }}
+                    <label for="{{ reservation_form.address.id_for_label }}">Address</label>{{ reservation_form.address }}
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset">
+            <legend class="legend">Reservation Information</legend>
+            <div class="form-row align-items-center">
+                <div class="form-group col-auto">
+                    {{ reservation_form.no_of_children.errors }}
+                    <label for="{{ reservation_form.no_of_children.id_for_label }}">No of
+                        Children</label>{{ reservation_form.no_of_children }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ reservation_form.no_of_adults.errors }}
+                    <label for="{{ reservation_form.no_of_adults.id_for_label }}">No of
+                        Adults</label>{{ reservation_form.no_of_adults }}
+                </div>
+            </div>
+            <div class="form-row align-items-center">
+                <div class="form-group col-auto">
+                    <p><a href="{% url 'rooms' %}" target="_blank">Click here to know about rooms</a> </p>
+                    {{ reservation_form.rooms.errors }}
+                    {{ reservation_form.rooms }}
+                </div>
+            </div>
+            <div class="form-row align-items-center">
+                <div class="form-group col-auto">
+                    {{ reservation_form.expected_arrival_date_time.errors }}
+                    <label for="{{ reservation_form.expected_arrival_date_time.id_for_label }}">Expected
+                        Arrival: </label>{{ reservation_form.expected_arrival_date_time }}
+                </div>
+                <div class="form-group col-auto">
+                    {{ reservation_form.expected_departure_date_time.errors }}
+                    <label for="{{ reservation_form.expected_departure_date_time.id_for_label }}">Expected
+                        Departure: </label>{{ reservation_form.expected_departure_date_time }}
+                </div>
+            </div>
+            <input type="submit" value="Confirm Reservation">
+        </fieldset>
+    </form>
+    {% comment %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ reservation_form.as_p }}
+        <input type="submit" value="Confirm Reservation"/>
+    </form>
+    {% endcomment %}
+{% endblock %}
+
+{% block media-files %}
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'css/forms.css' %} "/>
+
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'css/widgets.css' %}"/>
+
+    <script type="text/javascript"
+            src="{% static 'js/jsi18n.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'js/core.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'js/RelatedObjectLookups.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static '/js/jquery.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'js/jquery.init.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'js/actions.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/SelectBox.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/SelectFilter2.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'js/calendar.js' %}"></script>
+    <script type="text/javascript"
+            src="{% static 'js/DateTimeShortcuts.js' %}"></script>
+{% endblock %}

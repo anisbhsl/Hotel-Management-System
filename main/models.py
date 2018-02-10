@@ -77,17 +77,8 @@ class Reservation(models.Model):
 
 @python_2_unicode_compatible
 class Room(models.Model):
-    SIMPLE = 'SM'
-    DELUXE = 'DX'
-    PREMIUM = 'PM'
-    ROOM_CHOICES = (
-        (SIMPLE, 'Simple'),
-        (DELUXE, 'Deluxe'),
-        (PREMIUM, 'Premium')
-    )
-
     room_no = models.CharField(max_length=10, primary_key=True)
-    room_type = models.CharField(max_length=2, choices=ROOM_CHOICES, default=SIMPLE)
+    room_type = models.ForeignKey('RoomType', null=False, blank=True, on_delete=models.CASCADE)
     availability = models.BooleanField(default=0)
     reservation = models.ForeignKey(Reservation, null=True, blank=True, on_delete=models.CASCADE)
     facility = models.ManyToManyField('Facility')
@@ -122,10 +113,20 @@ class Room(models.Model):
 
 @python_2_unicode_compatible
 class Facility(models.Model):
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=25)
+    price = models.PositiveSmallIntegerField()
 
     class Meta:
         verbose_name_plural = 'Facilities'  # Otherwise admin panel shows Facilitys
+
+    def __str__(self):
+        return self.name
+
+
+@python_2_unicode_compatible
+class RoomType(models.Model):
+    name = models.CharField(max_length=25)
+    price = models.PositiveSmallIntegerField()
 
     def __str__(self):
         return self.name
