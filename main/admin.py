@@ -9,6 +9,7 @@ from .models import *
 class StaffAdmin(admin.ModelAdmin):
     # To show in admin app
     list_display = (
+        'profilepic',
         'staff_id',
         'user',
         'first_name',

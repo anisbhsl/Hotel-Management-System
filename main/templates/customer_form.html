@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content-title %}
+    <h1>{{ title }}</h1>
+{% endblock %}
+<!-- customer checkin form -->
+{% block main-content %}
+   <div class="container-fluid">
+       <div class="row">
+           <div class="col-sm-12 col-md-7">
+               <div class="panel panel-default">
+                   <div class="panel-body">
+                       <form class="form-horizontal" action="" method="POST">
+                           {% csrf_token %}
+                           <div class="form-group">
+                               <div class="col-sm-2 col-sm-10">
+                                   {% for field in form %}
+                                   <span class="text-danger small">{{ field.errors }}</span>
+                                   <label class="control-label col-sm-2">{{ field.label_tag }}</label>
+                                   <div class="col-sm-10">{{ field }}</div>
+                                   {% endfor %}
+                                   <div class="col-sm-10">{{ datefield }}</div>
+                                   <button type="submit" class="btn btn-success">Submit</button>
+                               </div>
+                           </div>
+
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+{% endblock %}

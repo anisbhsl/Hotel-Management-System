@@ -4,11 +4,63 @@
 {% endblock %}
 <!-- ToDo Work on FrontEnd -->
 {% block main-content %}
-    Total Number of Rooms: {{ total_num_rooms }} <br/>
-    Available Number of Rooms: {{ available_num_rooms }} <br/>
-    Total Number of Reservations: {{ total_num_reservations }} <br/>
-    Total Number of Staffs: {{ total_num_staffs }} <br/>
-    Total Number of Customers: {{ total_num_customers }} <br/>
+    <div class="row">
+        <div class="card .col-md-3" style="width:400px;">
+          
+            <div class="card-body">
+
+                        <table class="table table-hover">
+                            <th><div class="card-header bg-primary text-white">Total Rooms:</div></th>
+                            <th><div class="card-footer bg-primary text-white">Available Rooms:</div></th>
+                        <tr>
+                            <td><div class="card-body bg-warning text-white"> {{ total_num_rooms }}</div></td>
+                            <td><div class="card-body bg-warning text-white"> {{ available_num_rooms }}</div></td>
+                        </tr>
+
+                        </table>
+            </div>
+        </div>
+
+
+
+
+
+         <div class="card .col-md-3">
+
+                <div class="card-body">
+                <div class="card-header bg-primary text-white"> Total Reservations:</div>
+                <div class="card-body bg-warning text-white"> {{ total_num_reservations }}</div>
+                </div>
+
+        </div>
+
+        <div class="card .col-md-3">
+
+                <div class="card-body">
+                <div class="card-header bg-primary text-white"> Total Staffs: </div>
+                <div class="card-body bg-warning text-white">  {{ total_num_staffs }} </div>
+                </div>
+
+        </div>
+
+        <div class="card .col-md-3">
+
+
+                <div class="card-body">
+                <div class="card-header bg-primary text-white"> Total Customers: </div>
+                <div class="card-body bg-warning text-white">{{ total_num_customers }}</div>
+                </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
     <!-- ToDo Implement last reserved by -->
     {% comment %}
     {% if user.is_authenticated %}

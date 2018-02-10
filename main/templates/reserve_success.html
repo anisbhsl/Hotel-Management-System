@@ -3,7 +3,13 @@
     <h1>Reservation Successful</h1>
 {% endblock %}
 {% block main-content %}
-    Reservation ID: {{ reservation.reservation_id }}<br/>
-    Customer: <a href="{% url 'customer-detail' reservation.customer.customer_id %}">{{ reservation.customer }}</a><br/>
-    Reserved by: <a href="{% url 'staff-detail' reservation.staff.staff_id %}">{{ reservation.staff }}</a><br/>
+    <div class="container">
+
+        <div class="card">
+             <div class="card-header bg.success">Reservation ID: {{ reservation.reservation_id }}</div>
+            <div class="card-body bg.primary">Customer: <a href="{% url 'customer-detail' reservation.customer.customer_id %}">{{ reservation.customer }}</a>
+            </div>
+            <div class="card-footer bg.info">Reserved by: <a href="{% url 'staff-detail' reservation.staff.staff_id %}">{{ reservation.staff }}</a></div>
+  </div>
+</div>
 {% endblock %}
