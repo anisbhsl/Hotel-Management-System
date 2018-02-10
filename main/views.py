@@ -109,6 +109,9 @@ def reserve(request):
                         reservation_date_time=timezone.now(),
                     )
                     reservation.save()
+                    for room in reservation_form.cleaned_data.get('rooms'):
+                        room.reservation = reservation
+                        room.save()
             except IntegrityError:
                 print("Cannot make reservation.")
             return render(

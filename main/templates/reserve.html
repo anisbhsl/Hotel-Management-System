@@ -61,6 +61,13 @@
             </div>
             <div class="form-row align-items-center">
                 <div class="form-group col-auto">
+                    <p><a href="{% url 'rooms' %}" target="_blank">Click here to know about rooms</a> </p>
+                    {{ reservation_form.rooms.errors }}
+                    {{ reservation_form.rooms }}
+                </div>
+            </div>
+            <div class="form-row align-items-center">
+                <div class="form-group col-auto">
                     {{ reservation_form.expected_arrival_date_time.errors }}
                     <label for="{{ reservation_form.expected_arrival_date_time.id_for_label }}">Expected
                         Arrival: </label>{{ reservation_form.expected_arrival_date_time }}
@@ -104,6 +111,8 @@
             src="{% static 'js/jquery.init.js' %}"></script>
     <script type="text/javascript"
             src="{% static 'js/actions.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/SelectBox.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/SelectFilter2.js' %}"></script>
     <script type="text/javascript"
             src="{% static 'js/calendar.js' %}"></script>
     <script type="text/javascript"

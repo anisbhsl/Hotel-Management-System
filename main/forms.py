@@ -2,8 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Staff
-from .widgets import MySplitDateTime
+from .models import Staff, Room
+from .widgets import MySplitDateTime, FilteredSelectMultiple
 
 
 class Signup(forms.Form):
@@ -244,6 +244,16 @@ class ReservationForm(forms.Form):
             }
         )
     )
+    rooms = forms.ModelMultipleChoiceField(
+        queryset=Room.objects.filter(reservation__isnull=True),
+        widget=FilteredSelectMultiple(
+            is_stacked=True,
+            verbose_name="Rooms",
+            attrs={
+                'class': 'form-control',
+            }
+        )
+    )
     expected_arrival_date_time = forms.SplitDateTimeField(
         widget=MySplitDateTime(
         )
@@ -253,6 +263,8 @@ class ReservationForm(forms.Form):
         widget=MySplitDateTime(
         )
     )
+
+
 '''
     def clean_expected_arrival_date_time(self):
         expected_arrival_date_time = ' '.join(self.cleaned_data.get('expected_arrival_date_time'))
