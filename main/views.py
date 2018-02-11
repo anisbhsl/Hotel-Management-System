@@ -25,7 +25,10 @@ def index(request):
     total_num_staffs = Staff.objects.all().count()
     total_num_customers = Customer.objects.all().count()
     # TODO Implement last reserved by view
-    # last_reserved_by = Reservation.objects.get_queryset().latest('reservation_date_time')
+    if total_num_reservations == 0:
+        last_reserved_by = Reservation.objects.none()
+    else:
+        last_reserved_by = Reservation.objects.get_queryset().latest('reservation_date_time')
 
     return render(
         request,
@@ -41,7 +44,7 @@ def index(request):
             'total_num_reservations': total_num_reservations,
             'total_num_staffs': total_num_staffs,
             'total_num_customers': total_num_customers,
-            # 'last_reserved_by': last_reserved_by,
+            'last_reserved_by': last_reserved_by,
         }
     )
 
@@ -84,6 +87,7 @@ def signup(request):
 @transaction.atomic
 def reserve(request):
     title = "Add Reservation"
+    reservation = Reservation.objects.none()
     if request.method == 'POST':
         reservation_form = ReservationForm(request.POST)
         if reservation_form.is_valid():

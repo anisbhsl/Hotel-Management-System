@@ -251,8 +251,8 @@ class ReservationForm(forms.Form):
             verbose_name="Rooms",
             attrs={
                 'class': 'form-control',
-            }
-        )
+            },
+        ),
     )
     expected_arrival_date_time = forms.SplitDateTimeField(
         widget=MySplitDateTime(

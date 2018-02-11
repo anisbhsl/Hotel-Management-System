@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content-title %}
     <h1>Profile Information</h1>
 {% endblock %}
+
 {% block main-content %}
+    <img src="{{ MEDIA_URL }}{{ information.profile_picture }}"/><br/>
     Username: {{ user_information.username }}<br/>
     Name: {{ information.first_name }} {{ information.middle_name }} {{ information.last_name }}<br/>
     Contact No: {{ information.contact_no }}<br/>

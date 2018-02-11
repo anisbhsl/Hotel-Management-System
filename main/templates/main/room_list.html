@@ -7,6 +7,7 @@
             <tr>
                 <th>Room No</th>
                 <th>Room Type</th>
+                <th>Room Price</th>
                 <th>Availability</th>
             </tr>
             </thead>
@@ -14,10 +15,11 @@
             {% for room in room_list %}
                 <tr>
                     <td><a href="{% url 'room-detail' room.room_no %}"> {{ room.room_no }}</a></td>
-                    <td>{{ room.get_room_type_display }}</td>
+                    <td>{{ room.room_type.name }}</td>
+                    <td>{{ room.room_type.price }}</td>
                     <td>{% if room.availability %}
                         <span class="fa fa-check-circle" aria-hidden="true"> Available</span> {% else %}
-                        <span class="fa fa-times-circle" aria-hidden="true"> Not Available</span>{% endif %}</td>
+                        <span class="fa fa-times-circle" aria-hidden="true"> Not Available</span>{% endif %}
                     </td>
                 </tr>
             {% endfor %}

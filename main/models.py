@@ -8,7 +8,7 @@ from django.utils.encoding import python_2_unicode_compatible
 @python_2_unicode_compatible
 class Staff(models.Model):
     """ Model for staffs """
-    profilepic=models.ImageField(upload_to='static/staff_img/',default='static/images/staff.png')
+    profile_picture = models.ImageField(upload_to='staff_img/', default='images/staff.png')
     staff_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=50)
     middle_name = models.CharField(max_length=50, null=False, blank=True)
@@ -89,7 +89,7 @@ class Room(models.Model):
         permissions = (('can_view_room', 'Can view room'),)
 
     def __str__(self):
-        return self.room_no
+        return "%s - %s - Rs. %i" % (self.room_no, self.room_type.name, self.room_type.price)
 
     def display_facility(self):
         """

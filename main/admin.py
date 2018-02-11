@@ -9,7 +9,6 @@ from .models import *
 class StaffAdmin(admin.ModelAdmin):
     # To show in admin app
     list_display = (
-        'profilepic',
         'staff_id',
         'user',
         'first_name',
@@ -33,7 +32,7 @@ class StaffAdmin(admin.ModelAdmin):
     # Categorizing the fields
     fieldsets = (
         (None, {
-            'fields': (('first_name', 'middle_name', 'last_name'),)
+            'fields': ('profile_picture', ('first_name', 'middle_name', 'last_name'),)
         }),
         ('Contact Information', {
             'fields': (('contact_no', 'email_address'), 'address')

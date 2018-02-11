@@ -5,59 +5,58 @@
 <!-- ToDo Work on FrontEnd -->
 {% block main-content %}
     <div class="row">
-        <div class="card .col-md-3" style="width:400px;">
-          
+        <div class="card .col-md-3">
             <div class="card-body">
-
-                        <table class="table table-hover">
-                            <th><div class="card-header bg-primary text-white">Total Rooms:</div></th>
-                            <th><div class="card-footer bg-primary text-white">Available Rooms:</div></th>
-                        <tr>
-                            <td><div class="card-body bg-warning text-white"> {{ total_num_rooms }}</div></td>
-                            <td><div class="card-body bg-warning text-white"> {{ available_num_rooms }}</div></td>
-                        </tr>
-
-                        </table>
+                <div class="card-header bg-primary text-white"> Total Rooms:</div>
+                <div class="card-body bg-warning text-white"> {{ total_num_rooms }}</div>
             </div>
         </div>
 
+        <div class="card .col-md-3">
+            <div class="card-body">
+                <div class="card-header bg-primary text-white"> Available Rooms:</div>
+                <div class="card-body bg-warning text-white"> {{ available_num_rooms }}</div>
+            </div>
+        </div>
 
-
-
-
-         <div class="card .col-md-3">
-
-                <div class="card-body">
+        <div class="card .col-md-3">
+            <div class="card-body">
                 <div class="card-header bg-primary text-white"> Total Reservations:</div>
                 <div class="card-body bg-warning text-white"> {{ total_num_reservations }}</div>
-                </div>
-
+            </div>
         </div>
 
         <div class="card .col-md-3">
-
-                <div class="card-body">
-                <div class="card-header bg-primary text-white"> Total Staffs: </div>
+            <div class="card-body">
+                <div class="card-header bg-primary text-white"> Total Staffs:</div>
                 <div class="card-body bg-warning text-white">  {{ total_num_staffs }} </div>
-                </div>
-
+            </div>
         </div>
 
         <div class="card .col-md-3">
-
-
-                <div class="card-body">
-                <div class="card-header bg-primary text-white"> Total Customers: </div>
+            <div class="card-body">
+                <div class="card-header bg-primary text-white"> Total Customers:</div>
                 <div class="card-body bg-warning text-white">{{ total_num_customers }}</div>
-                </div>
-
+            </div>
         </div>
-
-
+        {% if user.is_authenticated %}
+            <div class="card .col-md-3">
+                <div class="card-body">
+                    <div class="card-header bg-primary text-white"> Last Reservation:</div>
+                    <div class="card-body bg-warning text-white">Reservation for: <a
+                            href="{% url 'customer-detail' last_reserved_by.customer.customer_id %}">{{ last_reserved_by.customer }}</a>
+                    </div>
+                    <div class="card-body bg-warning text-white">
+                        Reserved By:
+                        {% if perms.main.can_view_staff_detail %}
+                            <a href="{% url 'staff-detail' last_reserved_by.staff.staff_id %}">{{ last_reserved_by.staff }}</a>
+                            {% else %}{{ last_reserved_by.staff }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
-
-
-
 
 
 
