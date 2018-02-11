@@ -57,19 +57,4 @@
             </div>
         {% endif %}
     </div>
-
-
-
-    <!-- ToDo Implement last reserved by -->
-    {% comment %}
-    {% if user.is_authenticated %}
-        {% if total_num_reservations > 0 %}
-            Last Reserved By: <br/>
-            Customer ID:
-            <a href="{% url 'customer-detail' last_reserved_by.customer_id %}"> {{ last_reserved_by.customer_id }}</a>
-            <br/>
-            Customer Name: {{ last_reserved_by.customer.first_name }} {{ last_reserved_by.customer.last_name }} <br/>
-        {% endif %}
-    {% endif %}
-    {% endcomment %}
 {% endblock %}

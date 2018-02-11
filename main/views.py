@@ -24,7 +24,6 @@ def index(request):
     total_num_reservations = Reservation.objects.all().count()
     total_num_staffs = Staff.objects.all().count()
     total_num_customers = Customer.objects.all().count()
-    # TODO Implement last reserved by view
     if total_num_reservations == 0:
         last_reserved_by = Reservation.objects.none()
     else:
