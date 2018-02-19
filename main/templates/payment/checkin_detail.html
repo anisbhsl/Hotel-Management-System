@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content-title %}
+    <h1>Check-In No: {{ checkin.id }}</h1>
+{% endblock %}
+<!-- TODO Work on FrontEnd -->
+{% block main-content %}
+    Reservation:
+    <a href="{% url 'reservation-detail' checkin.reservation.reservation_id %}">{{ checkin.reservation }}</a> <br/>
+
+    {% for room in rooms %}
+        <ul>
+            <li>Room: <a href="{% url 'room-detail' room %}">{{ room }}</a></li>
+            <br/>
+            {% for facility in facilities %}
+            {% endfor %}
+
+        </ul>
+    {% endfor %}
+{% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+<!--ToDo Work on Front end -->
+{% block content-title %}
+    <h1>Check-In List</h1>
+{% endblock %}
+{% block main-content %}
+    {% if checkin_list %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Check-In ID</th>
+                <th>Reservation ID</th>
+                <th>Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for check_in in checkin_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'check_in-detail' check_in.id %}"> {{ check_in }}</a>
+                    </td>
+                    <td>{{ check_in.reservation_id}}</td>
+                    <td>{{ check_in.initial_amount }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no check-ins.</p>
+    {% endif %}
+{% endblock %}

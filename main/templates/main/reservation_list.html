@@ -10,6 +10,7 @@
                 <th>Staff</th>
                 <th>No of Children</th>
                 <th>No of Adults</th>
+                <th>Rooms</th>
                 <th>Reservation Date Time</th>
             </tr>
             </thead>
@@ -23,6 +24,11 @@
                     <td>{{ reservation.staff }}</td>
                     <td>{{ reservation.no_of_children }}</td>
                     <td>{{ reservation.no_of_adults }}</td>
+                    <td>
+                        {% for room in reservation.room_set.all %}
+                            {{ room.room_no }} {% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                    </td>
                     <td>{{ reservation.reservation_date_time }}</td>
                 </tr>
             {% endfor %}

@@ -74,7 +74,7 @@
                             <a class="nav-link" href="{% url 'rooms' %}">Rooms</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">To Do</a>
+                            <a class="nav-link" href="{% url 'payment-index' %}">Payments</a>
                         </li>
                     </ul>
                     {% if user.is_authenticated %}
@@ -83,10 +83,10 @@
                                 <a class="nav-link" href="{% url 'reserve' %}">Reserve</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Check-in</a>
+                                <a class="nav-link" href="{% url 'check_in-list' %}">Check-ins</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Check-out</a>
+                                <a class="nav-link" href="#">Check-outs</a>
                             </li>
                         </ul>
                     {% endif %}
