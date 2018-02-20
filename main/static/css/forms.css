@@ -1,0 +1,24 @@
+@import 'widgets.css';
+
+.vDateField, .vTimeField {
+    margin-right: 2px;
+    margin-bottom: 4px;
+}
+
+.vDateField {
+    min-width: 6.85em;
+}
+
+.vTimeField {
+    min-width: 4.7em;
+}
+
+.vSelectMultipleField {
+    vertical-align: top;
+}
+
+form .related-widget-wrapper ul {
+    display: inline-block;
+    margin-left: 0;
+    padding-left: 0;
+}
