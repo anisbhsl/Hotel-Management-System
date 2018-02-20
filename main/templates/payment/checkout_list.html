@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+<!--ToDo Work on Front end -->
+{% block content-title %}
+    <h1>{{ title }}</h1>
+{% endblock %}
+{% block main-content %}
+    {% if checkout_list %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Check-Out ID</th>
+                <th>Check-Out Date Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for check_out in checkout_list %}
+            <tr>
+                <td><a href="{% url 'check_out-detail' check_out.id %}">{{ check_out }}</a></td>
+                <td>{{ check_out.check_out_date_time }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no check-ins.</p>
+    {% endif %}
+{% endblock %}

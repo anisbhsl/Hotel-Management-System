@@ -47,6 +47,9 @@ class CheckOut(models.Model):
     check_in = models.OneToOneField(CheckIn, on_delete=models.CASCADE)
     check_out_date_time = models.DateTimeField(editable=False, null=True)
 
+    def __str__(self):
+        return str(self.id)
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.check_out_date_time = timezone.now()

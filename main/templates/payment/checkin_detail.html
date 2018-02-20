@@ -6,15 +6,13 @@
 {% block main-content %}
     Reservation:
     <a href="{% url 'reservation-detail' checkin.reservation.reservation_id %}">{{ checkin.reservation }}</a> <br/>
-
+    Rooms:
     {% for room in rooms %}
-        <ul>
-            <li>Room: <a href="{% url 'room-detail' room %}">{{ room }}</a></li>
-            <br/>
-            {% for facility in facilities %}
-            {% endfor %}
-
-        </ul>
-    {% endfor %}
+        <a href="{% url 'room-detail' room %}">{{ room }}</a>{% if not forloop.last %}, {% endif %}
+    {% empty %}No rooms in the reservation.
+    {% endfor %}<br/>
+    Amount = {{ checkin.initial_amount }}<br/>
+    Check-In Date Time = {{ checkin.check_in_date_time }}<br/>
+    Last Edited On = {{ checkin.last_edited_on }}<br/>
 {% endblock %}
 

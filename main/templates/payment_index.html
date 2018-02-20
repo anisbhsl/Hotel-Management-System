@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content-title %}
+    <h1>{{ title }}</h1>
+{% endblock %}
+<!-- ToDo Work on FrontEnd -->
+{% block main-content %}
+    <div class="row">
+        <div class="card .col-md-3">
+            <div class="card-body">
+                <div class="card-header bg-primary text-white"> Total Reservations:</div>
+                <div class="card-body bg-warning text-white"> {{ num_of_reservations }}</div>
+            </div>
+        </div>
+        <div class="card .col-md-3">
+            <div class="card-body">
+                <div class="card-header bg-primary text-white"> Total Check-Ins:</div>
+                <div class="card-body bg-warning text-white"> {{ num_of_check_ins }}</div>
+            </div>
+        </div>
+        <div class="card .col-md-3">
+            <div class="card-body">
+                <div class="card-header bg-primary text-white"> Last Check-In:</div>
+                <div class="card-body bg-warning text-white"><a
+                        href="{% url 'check_in-detail' last_checked_in.id %}">{{ last_checked_in }}</a></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 <!--ToDo Work on Front end -->
 {% block content-title %}
-    <h1>Check-In List</h1>
+    <h1>{{ title }}</h1>
 {% endblock %}
 {% block main-content %}
     {% if checkin_list %}
         <table class="table table-hover">
             <thead>
             <tr>
-                <th>Check-In ID</th>
-                <th>Reservation ID</th>
+                <th>Check-In</th>
+                <th>Reservation</th>
+                <th>Rooms</th>
                 <th>Amount</th>
             </tr>
             </thead>
@@ -19,7 +20,8 @@
                     <td>
                         <a href="{% url 'check_in-detail' check_in.id %}"> {{ check_in }}</a>
                     </td>
-                    <td>{{ check_in.reservation_id}}</td>
+                    <td>{{ check_in.reservation }}</td>
+                    <td>{% if check_in.rooms %}{{ check_in.rooms }}{% else %}-{% endif %}</td>
                     <td>{{ check_in.initial_amount }}</td>
                 </tr>
             {% endfor %}
