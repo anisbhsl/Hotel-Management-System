@@ -2,13 +2,17 @@
 {% block content-title %}
     <h1>{{ title }}</h1>
 {% endblock %}
-<!-- TODO Work on FrontEnd -->
 {% block main-content %}
-    Id: {{ customer.customer_id }} <br/>
-    First Name: {{ customer.first_name }} <br/>
-    Last Name: {{ customer.last_name }} <br/>
-    Contact No: {{ customer.contact_no }} <br/>
-    Address: {{ customer.address }} <br/>
-    <!-- Only if customer has email -->
-    {% if customer.email_address %}Email Address: {{ customer.email_address }} {% endif %}<br/>
+<div class="row">
+    <div class="card text-left col-md-6">
+        <div class="card-header bg-primary text-white"> Id: {{ customer.customer_id }} </div>
+        <div class="card-body bg-info text-white">First Name: {{ customer.first_name }} <br>
+                                Last Name: {{ customer.last_name }} </div>
+        <div class="card-footer bg-info text-white">Address: {{ customer.address }} </div>
+        <div class="card-footer bg-info text-white">Contact No: {{ customer.contact_no }}</div>
+        <!-- Only if customer has email -->
+        <div class="card-footer bg-info text-white">{% if customer.email_address %}Email Address: {{ customer.email_address }} {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
