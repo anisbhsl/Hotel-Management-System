@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block main-content %}
+    <form action="" method="post" id="checkin">{% csrf_token %}
+        {{ form }}
+    </form>
     {% if reservation_list %}
         <table class="table table-hover">
             <thead>
@@ -12,6 +15,7 @@
                 <th>No of Adults</th>
                 <th>Rooms</th>
                 <th>Reservation Date Time</th>
+                <th>Check In?</th>
             </tr>
             </thead>
             <tbody>
@@ -26,15 +30,55 @@
                     <td>{{ reservation.no_of_adults }}</td>
                     <td>
                         {% for room in reservation.room_set.all %}
-                            {{ room.room_no }} {% if not forloop.last %},{% endif %}
+                            {{ room.room_no }}{% if not forloop.last %},{% endif %}
                         {% endfor %}
                     </td>
                     <td>{{ reservation.reservation_date_time }}</td>
+                    <td>{% if not reservation.checkin %}
+                        <button id="{{ reservation.reservation_id }}" type="button" class="btn btn-primary confirm-checkin"
+                                data-toggle="modal"
+                                data-target="#checkInConfirmBox">
+                            Check-In
+                        </button>
+
+                    {% else %}
+                        <a class="btn btn-secondary"
+                           href="{% url 'check_in-detail' reservation.checkin.id %}">Details</a>
+                    {% endif %}</td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="modal fade" id="checkInConfirmBox">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirm Check-In</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Do you want to confirm check-in?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" form="checkin">
+                            Yes
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% else %}
         <p>There are no reservations.</p>
     {% endif %}
+{% endblock %}
+{% block additional-javascript %}
+    <script>
+        $(document).ready(function () {
+            $(".confirm-checkin").click(function () {
+                var $id = $(this).attr("id");
+                $("#id_reservation").attr("value", $id);
+            });
+        });
+    </script>
 {% endblock %}

@@ -10,5 +10,8 @@
     Total Amount: {{ checkout.total_amount }}<br/>
     Pay Amount: {{ checkout.pay_amount }} <br/>
     Check-Out Date Time = {{ checkout.check_out_date_time }}<br/>
+    Checked Out by:
+    {% if staff.count == 0 %} {{ checkout.user }}{% else %}
+        <a href="{% url 'staff-detail' staff.staff_id %}">{{ staff }}</a>
+    {% endif %}
 {% endblock %}
-

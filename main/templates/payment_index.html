@@ -20,8 +20,12 @@
         <div class="card .col-md-3">
             <div class="card-body">
                 <div class="card-header bg-primary text-white"> Last Check-In:</div>
-                <div class="card-body bg-warning text-white"><a
-                        href="{% url 'check_in-detail' last_checked_in.id %}">{{ last_checked_in }}</a></div>
+                {% if last_checked_in.count > 0 %}
+                    <div class="card-body bg-warning text-white"><a
+                            href="{% url 'check_in-detail' last_checked_in.id %}">{{ last_checked_in }}</a></div>
+                {% else %}
+                    <div class="card-body bg-warning text-white">Not Yet</div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
+from payment.models import CheckIn
 from .models import Staff, Room
 from .widgets import MySplitDateTime, FilteredSelectMultiple
 
@@ -263,6 +264,13 @@ class ReservationForm(forms.Form):
         widget=MySplitDateTime(
         )
     )
+
+
+class CheckInRequestForm(forms.ModelForm):
+    class Meta:
+        model = CheckIn
+        fields = ['reservation']
+        widgets = {'reservation': forms.HiddenInput()}
 
 
 '''

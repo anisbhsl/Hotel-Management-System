@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.db import transaction, IntegrityError
+from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from main.models import Facility, Reservation
+from main.models import Facility, Reservation, Staff
 from .forms import CheckoutRequestForm
 from .models import CheckIn, CheckOut
 
@@ -32,6 +34,7 @@ def payment_index(request):
 class CheckInListView(PermissionRequiredMixin, generic.ListView, generic.FormView):
     model = CheckIn
     paginate_by = 5
+    queryset = CheckIn.objects.all().order_by('-check_in_date_time')
     permission_required = 'main.can_view_customer'
     title = "Check-In List"
     form_class = CheckoutRequestForm
@@ -40,10 +43,18 @@ class CheckInListView(PermissionRequiredMixin, generic.ListView, generic.FormVie
     }
     success_url = reverse_lazy('checkout')
 
+    @transaction.atomic
     def form_valid(self, form):
-        checkout = form.save(commit=False)
-        checkout.user = self.request.user
-        checkout.save()
+        try:
+            with transaction.atomic():
+                checkout = form.save(commit=False)
+                checkout.user = self.request.user
+                checkout.save()
+                for room in checkout.check_in.reservation.room_set.all():
+                    room.reservation = None
+                    room.save()
+        except IntegrityError:
+            raise Http404
         return super().form_valid(form)
 
 
@@ -67,6 +78,12 @@ class CheckInDetailView(PermissionRequiredMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)
         checkin = context['checkin']
         rooms = checkin.rooms
+        staff = Staff.objects.filter(user=checkin.user)
+        if not staff.count():
+            staff = Staff.objects.none()
+        else:
+            staff = Staff.objects.get(user=checkin.user)
+        context['staff'] = staff
         if rooms:
             new_rooms = checkin.rooms.split(', ')
             new_rooms = list(map(int, new_rooms))
@@ -77,6 +94,7 @@ class CheckInDetailView(PermissionRequiredMixin, generic.DetailView):
 class CheckOutListView(PermissionRequiredMixin, generic.ListView):
     model = CheckOut
     paginate_by = 5
+    queryset = CheckOut.objects.all().order_by('-check_out_date_time')
     permission_required = 'main.can_view_customer'
     title = "Check-Out List"
     extra_context = {
@@ -91,6 +109,19 @@ class CheckOutDetailView(PermissionRequiredMixin, generic.DetailView):
     extra_context = {
         'title': title,
     }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        checkout = context['checkout']
+
+        staff = Staff.objects.filter(user=checkout.user)
+        if not staff.count():
+            staff = Staff.objects.none()
+        else:
+            staff = Staff.objects.get(user=checkout.user)
+        context['staff'] = staff
+
+        return context
 
 
 def checkout_confirm(request):

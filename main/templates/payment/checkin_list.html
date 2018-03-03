@@ -14,7 +14,8 @@
                 <th>Check-In</th>
                 <th>Reservation</th>
                 <th>Rooms</th>
-                <th>Amount</th>
+                <th>Paid Amount</th>
+                <th>Check-In Date Time</th>
                 <th>Checkout?</th>
             </tr>
             </thead>
@@ -27,19 +28,20 @@
                     <td>{{ check_in.reservation }}</td>
                     <td>{% if check_in.rooms %}{{ check_in.rooms }}{% else %}-{% endif %}</td>
                     <td>{{ check_in.initial_amount }}</td>
-                    {% if not check_in.checkout %}
-                        <td>
+                    <td>{{ check_in.check_in_date_time }}</td>
+                    <td>
+                        {% if not check_in.checkout %}
                             <button id="{{ check_in.id }}" type="button" class="btn btn-primary confirm-checkout"
                                     data-toggle="modal"
                                     data-target="#checkoutConfirmBox">
                                 Checkout
                             </button>
-                        </td>
-                    {% else %}
-                        <td>
-                        <a class="btn btn-secondary"
-                           href="{% url 'check_out-detail' check_in.checkout.id %}">Details</a>
-                    {% endif %}
+
+                        {% else %}
+                            <a class="btn btn-secondary"
+                               href="{% url 'check_out-detail' check_in.checkout.id %}">Details</a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
