@@ -5,7 +5,7 @@
 {% endblock %}
 {% block main-content %}
     {% if checkin_list %}
-        <form action="{% url 'checkout' %}" method="post" id="checkout">{% csrf_token %}
+        <form action="" method="post" id="checkout">{% csrf_token %}
             {{ form }}
         </form>
         <table class="table table-hover">
@@ -29,20 +29,58 @@
                     <td>{{ check_in.initial_amount }}</td>
                     {% if not check_in.checkout %}
                         <td>
-                            <button class="btn btn-primary" type="submit" form="checkout"
-                                    onclick="document.getElementById('id_check_in').setAttribute('value', {{ check_in.id }})">
+                            <button id="{{ check_in.id }}" type="button" class="btn btn-primary confirm-checkout"
+                                    data-toggle="modal"
+                                    data-target="#checkoutConfirmBox">
                                 Checkout
                             </button>
                         </td>
                     {% else %}
                         <td>
-                            <a class="btn btn-secondary" href="{% url 'check_out-detail' check_in.checkout.id %}">Details</a>
+                        <a class="btn btn-secondary"
+                           href="{% url 'check_out-detail' check_in.checkout.id %}">Details</a>
                     {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+        <div class="modal fade" id="checkoutConfirmBox">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirm Checkout</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Do you want to confirm checkout?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" form="checkout">
+                            Yes
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% else %}
         <p>There are no check-ins.</p>
     {% endif %}
+    {% block additional-javascript %}
+        <script>
+            $(document).ready(function () {
+                $(".confirm-checkout").click(function () {
+                    var $id = $(this).attr("id");
+                    $("#id_check_in").attr("value", "" + $id);
+                });
+            });
+            /*
+            $(document).ready(function () {
+                $(".confirm-checkout").mouseleave(function () {
+                    $("#id_check_in").removeAttr("value");
+                });
+            });
+            */
+        </script>
+    {% endblock %}
 {% endblock %}

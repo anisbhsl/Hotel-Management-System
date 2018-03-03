@@ -14,7 +14,12 @@ class CheckInAdmin(admin.ModelAdmin):
         'initial_amount',
         'check_in_date_time',
         'last_edited_on',
+        'user'
     ]
+
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(CheckOut)
@@ -24,5 +29,10 @@ class CheckOutAdmin(admin.ModelAdmin):
         'stay_duration',
         'total_amount',
         'pay_amount',
-        'check_out_date_time'
+        'check_out_date_time',
+        'user'
     ]
+
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        super().save_model(request, obj, form, change)

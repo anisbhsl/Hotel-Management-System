@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
 
 from main.models import Facility, Reservation
@@ -37,6 +38,13 @@ class CheckInListView(PermissionRequiredMixin, generic.ListView, generic.FormVie
     extra_context = {
         'title': title,
     }
+    success_url = reverse_lazy('checkout')
+
+    def form_valid(self, form):
+        checkout = form.save(commit=False)
+        checkout.user = self.request.user
+        checkout.save()
+        return super().form_valid(form)
 
 
 class CheckInDetailView(PermissionRequiredMixin, generic.DetailView):

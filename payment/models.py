@@ -1,10 +1,12 @@
 from math import ceil
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
+from django.http import HttpRequest
 
 from main.models import Reservation, Room
 
@@ -18,6 +20,7 @@ class CheckIn(models.Model):
     initial_amount = models.PositiveSmallIntegerField(blank=True, editable=False)
     check_in_date_time = models.DateTimeField(default=timezone.now, editable=False)
     last_edited_on = models.DateTimeField(default=timezone.now, editable=False)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, editable=False)
 
     def __str__(self):
         return "%i - %s" % (self.reservation.reservation_id, self.reservation.customer)
@@ -51,6 +54,7 @@ class CheckOut(models.Model):
     total_amount = models.PositiveSmallIntegerField(default=0, editable=False)
     pay_amount = models.PositiveSmallIntegerField(default=0, editable=False)
     check_out_date_time = models.DateTimeField(editable=False, null=True)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, editable=False)
 
     def __str__(self):
         return str(self.id)
