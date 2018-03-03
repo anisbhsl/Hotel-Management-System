@@ -21,5 +21,8 @@ class CheckInAdmin(admin.ModelAdmin):
 class CheckOutAdmin(admin.ModelAdmin):
     list_display = [
         'check_in',
+        'stay_duration',
+        'total_amount',
+        'pay_amount',
         'check_out_date_time'
     ]

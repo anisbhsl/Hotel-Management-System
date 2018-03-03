@@ -9,6 +9,10 @@
             <thead>
             <tr>
                 <th>Check-Out ID</th>
+                <th>Related Check-in</th>
+                <th>Stay Duration</th>
+                <th>Total Amount</th>
+                <th>Pay Amount</th>
                 <th>Check-Out Date Time</th>
             </tr>
             </thead>
@@ -16,6 +20,10 @@
             {% for check_out in checkout_list %}
             <tr>
                 <td><a href="{% url 'check_out-detail' check_out.id %}">{{ check_out }}</a></td>
+                <td><a href="{% url 'check_in-detail' check_out.check_in.id %}">{{ check_out.check_in }}</a></td>
+                <td>{{ check_out.stay_duration }}</td>
+                <td>{{ check_out.total_amount }}</td>
+                <td>{{ check_out.pay_amount }}</td>
                 <td>{{ check_out.check_out_date_time }}</td>
             </tr>
             {% endfor %}

@@ -1,14 +1,15 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.http import HttpResponse
-from django.views import generic
-from django.shortcuts import render
-from main.models import Facility, Reservation
-from .models import CheckIn, CheckOut
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.shortcuts import render
+from django.views import generic
+
+from main.models import Facility, Reservation
+from .forms import CheckoutRequestForm
+from .models import CheckIn, CheckOut
 
 
 # Create your views here.
-@permission_required('main.can_view_staff', login_url='login', raise_exception=True)
+@permission_required('main.can_view_staff', login_url='login')
 def payment_index(request):
     title = "Payment Dashboard"
     num_of_reservations = Reservation.objects.all().count()
@@ -27,11 +28,12 @@ def payment_index(request):
     )
 
 
-class CheckInListView(PermissionRequiredMixin, generic.ListView):
+class CheckInListView(PermissionRequiredMixin, generic.ListView, generic.FormView):
     model = CheckIn
     paginate_by = 5
     permission_required = 'main.can_view_customer'
     title = "Check-In List"
+    form_class = CheckoutRequestForm
     extra_context = {
         'title': title,
     }
@@ -78,8 +80,15 @@ class CheckOutDetailView(PermissionRequiredMixin, generic.DetailView):
     model = CheckOut
     permission_required = 'main.can_view_customer'
     title = "Check-Out Detail"
-
     extra_context = {
         'title': title,
     }
 
+
+def checkout_confirm(request):
+    return render(
+        request,
+        'confirm_checkout.html', {
+            'title': 'Confirm Checkout'
+        }
+    )

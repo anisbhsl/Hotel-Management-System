@@ -5,6 +5,9 @@
 {% endblock %}
 {% block main-content %}
     {% if checkin_list %}
+        <form action="{% url 'checkout' %}" method="post" id="checkout">{% csrf_token %}
+            {{ form }}
+        </form>
         <table class="table table-hover">
             <thead>
             <tr>
@@ -12,6 +15,7 @@
                 <th>Reservation</th>
                 <th>Rooms</th>
                 <th>Amount</th>
+                <th>Checkout?</th>
             </tr>
             </thead>
             <tbody>
@@ -23,6 +27,17 @@
                     <td>{{ check_in.reservation }}</td>
                     <td>{% if check_in.rooms %}{{ check_in.rooms }}{% else %}-{% endif %}</td>
                     <td>{{ check_in.initial_amount }}</td>
+                    {% if not check_in.checkout %}
+                        <td>
+                            <button class="btn btn-primary" type="submit" form="checkout"
+                                    onclick="document.getElementById('id_check_in').setAttribute('value', {{ check_in.id }})">
+                                Checkout
+                            </button>
+                        </td>
+                    {% else %}
+                        <td>
+                            <a class="btn btn-secondary" href="{% url 'check_out-detail' check_in.checkout.id %}">Details</a>
+                    {% endif %}
                 </tr>
             {% endfor %}
             </tbody>
