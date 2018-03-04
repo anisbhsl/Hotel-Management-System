@@ -8,5 +8,4 @@ urlpatterns = [
     path('check_in/<str:pk>', views.CheckInDetailView.as_view(), name='check_in-detail'),
     path('check_outs/', views.CheckOutListView.as_view(), name='check_out-list'),
     path('check_out/<str:pk>', views.CheckOutDetailView.as_view(), name='check_out-detail'),
-    path('confirm_check_out/', views.checkout_confirm, name='checkout')
 ]

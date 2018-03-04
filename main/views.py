@@ -206,6 +206,7 @@ class ReservationListView(PermissionRequiredMixin, generic.ListView, generic.For
     queryset = Reservation.objects.all().order_by('-reservation_date_time')
     title = _("Reservation List")
     paginate_by = 5
+    allow_empty = True
     form_class = CheckInRequestForm
     success_url = reverse_lazy('check_in-list')
     permission_required = 'main.can_view_reservation'

@@ -35,13 +35,14 @@ class CheckInListView(PermissionRequiredMixin, generic.ListView, generic.FormVie
     model = CheckIn
     paginate_by = 5
     queryset = CheckIn.objects.all().order_by('-check_in_date_time')
+    allow_empty = True
     permission_required = 'main.can_view_customer'
     title = "Check-In List"
     form_class = CheckoutRequestForm
     extra_context = {
         'title': title,
     }
-    success_url = reverse_lazy('checkout')
+    success_url = reverse_lazy('check_out-list')
 
     @transaction.atomic
     def form_valid(self, form):
@@ -94,6 +95,7 @@ class CheckInDetailView(PermissionRequiredMixin, generic.DetailView):
 class CheckOutListView(PermissionRequiredMixin, generic.ListView):
     model = CheckOut
     paginate_by = 5
+    allow_empty = True
     queryset = CheckOut.objects.all().order_by('-check_out_date_time')
     permission_required = 'main.can_view_customer'
     title = "Check-Out List"
@@ -123,11 +125,3 @@ class CheckOutDetailView(PermissionRequiredMixin, generic.DetailView):
 
         return context
 
-
-def checkout_confirm(request):
-    return render(
-        request,
-        'confirm_checkout.html', {
-            'title': 'Confirm Checkout'
-        }
-    )
