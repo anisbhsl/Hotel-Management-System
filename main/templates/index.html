@@ -43,7 +43,7 @@
             <div class="card .col-md-3">
                 <div class="card-body">
                     <div class="card-header bg-primary text-white"> Last Reservation:</div>
-                    {% if last_reserved_by.count > 0 %}
+                    {% if last_reserved_by.reservation_id %}
                         <div class="card-body bg-dark text-white">Reservation for: <a
                                 href="{% url 'customer-detail' last_reserved_by.customer.customer_id %}">{{ last_reserved_by.customer }}</a>
                         </div>
