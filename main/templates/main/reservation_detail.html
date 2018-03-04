@@ -1,21 +1,28 @@
 {% extends 'base.html' %}
 {% block content-title %}
-    <h1>Reservation No: {{ reservation.reservation_id }}</h1>
+    <h1>Reservation No. {{ reservation.reservation_id }} Details</h1>
 {% endblock %}
-<!-- TODO Work on FrontEnd -->
 {% block main-content %}
-    Customer: <a href="{% url 'customer-detail' reservation.customer_id %}">{{ reservation.customer }}</a> <br/>
-    Staff: <a href="{% url 'staff-detail' reservation.staff_id %}">{{ reservation.staff }}</a><br/>
-    No of Children: {{ reservation.no_of_children }}<br/>
-    No of Adults: {{ reservation.no_of_adults }}<br/>
-    Reservation Date: {{ reservation.reservation_date_time }}<br/>
-    Expected Arrival: {{ reservation.expected_arrival_date_time }}<br/>
-    Expected Departure: {{ reservation.expected_departure_date_time }}<br/>
-    {% if reservation.room_set.all %}
-        Reserved Rooms:
-        {% for room in reservation.room_set.all %}
-            <strong><a href="{% url 'room-detail' room.room_no %}">{{ room }}</a>{% if not forloop.last %}
+    <div class="row">
+        <div class="card text-left col-md-6">
+            <div class="card-header bg-primary text-white">Customer: <a href="{% url 'customer-detail' reservation.customer_id %}" class="text-white">{{ reservation.customer }}</a>  </div>
+            <div class="card-body bg-info text-white">Staff: <a href="{% url 'staff-detail' reservation.staff_id %}" class="text-white">{{ reservation.staff }}</a><br>
+                             </div>
+            <div class="card-footer bg-info text-white">No of Children: {{ reservation.no_of_children }}</div>
+            <div class="card-footer bg-info text-white"> No of Adults: {{ reservation.no_of_adults }}</div>
+            <div class="card-footer bg-info text-white">Reservation Date: {{ reservation.reservation_date_time }}</div>
+            <div class="card-footer bg-info text-white">  Expected Arrival: {{ reservation.expected_arrival_date_time }}</div>
+            <div class="card-footer bg-info text-white"> Expected Departure: {{ reservation.expected_departure_date_time }}</div>
+            <div class="card-footer bg-info text-white">{% if reservation.room_set.all %}
+             Reserved Rooms:
+                {% for room in reservation.room_set.all %}
+                <strong><a href="{% url 'room-detail' room.room_no %}" class="text-white">{{ room }}</a>{% if not forloop.last %}
                 , {% endif %}</strong>
-        {% endfor %}
-    {% endif %}
+            {% endfor %}
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}

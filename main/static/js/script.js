@@ -1,5 +1,0 @@
-// slider
-
-$(function () {
-    $("#datepicker").datepicker();
-});

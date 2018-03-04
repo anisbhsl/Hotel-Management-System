@@ -81,7 +81,7 @@ class Room(models.Model):
     room_no = models.CharField(max_length=10, primary_key=True)
     room_type = models.ForeignKey('RoomType', null=False, blank=True, on_delete=models.CASCADE)
     availability = models.BooleanField(default=0)
-    reservation = models.ForeignKey(Reservation, null=True, blank=True, on_delete=models.CASCADE)
+    reservation = models.ForeignKey(Reservation, null=True, blank=True, on_delete=models.SET_NULL)
     facility = models.ManyToManyField('Facility')
 
     class Meta:
@@ -131,3 +131,4 @@ class RoomType(models.Model):
 
     def __str__(self):
         return self.name
+

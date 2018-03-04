@@ -2,13 +2,23 @@
 {% block content-title %}
     <h1>{{ title }}</h1>
 {% endblock %}
-<!-- TODO Work on FrontEnd -->
 {% block main-content %}
-    Id: {{ staff.staff_id }} <br/>
-    First Name: {{ staff.first_name }} <br/>
-    Last Name: {{ staff.last_name }} <br/>
-    Contact No: {{ staff.contact_no }} <br/>
-    Address: {{ staff.address }} <br/>
-    <!-- Only if staff has email -->
-    {% if staff.email_address %}Email Address: {{ staff.email_address }} {% endif %}<br/>
+    <div class="row">
+        <div class="card text-left col-md-6">
+            <div class="card-header text-center">
+                {% load static %}
+                <img src="{% static "img/staffavatar.svg"%}" alt="Staff Avatar" style="width:200px; height=200px;">
+            </div>
+            <div class="card-header bg-info text-white">Id: {{ staff.staff_id }}  </div>
+            <div class="card-body bg-info text-white">First Name: {{ staff.first_name }}  <br>
+                                Last Name:  {{ staff.last_name }}  </div>
+            <div class="card-footer bg-info text-white">Contact No: {{ staff.contact_no }} </div>
+            <div class="card-footer bg-info text-white">Address: {{ staff.address }}</div>
+            <!-- Only if staff has email -->
+            <div class="card-footer bg-info text-white">  {% if staff.email_address %}Email Address: {{ staff.email_address }} {% endif %}
+            </div>
+        </div>
+
+    </div>
+
 {% endblock %}

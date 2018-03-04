@@ -5,11 +5,12 @@ from django.core.exceptions import ValidationError
 from django.db import transaction, IntegrityError
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404  # For displaying in template
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 
-from .forms import Signup, ReservationForm
+from .forms import Signup, ReservationForm, CheckInRequestForm
 from .models import Room, Reservation, Customer, Staff  # Import Models
 
 
@@ -69,8 +70,7 @@ def signup(request):
                     s.user.save()
                     s.save()
             except IntegrityError:
-                print("Couldn't add staff")
-
+                raise Http404
             return redirect('index')
     else:
         form = Signup()
@@ -116,7 +116,7 @@ def reserve(request):
                         room.reservation = reservation
                         room.save()
             except IntegrityError:
-                print("Cannot make reservation.")
+                raise Http404
             return render(
                 request,
                 'reserve_success.html', {
@@ -195,7 +195,7 @@ class RoomDetailView(PermissionRequiredMixin, generic.DetailView):
     extra_context = {'title': title}
 
 
-class ReservationListView(PermissionRequiredMixin, generic.ListView):
+class ReservationListView(PermissionRequiredMixin, generic.ListView, generic.FormView):
     """
         View for list of reservations.
         Implements generic ListView.
@@ -206,8 +206,21 @@ class ReservationListView(PermissionRequiredMixin, generic.ListView):
     queryset = Reservation.objects.all().order_by('-reservation_date_time')
     title = _("Reservation List")
     paginate_by = 5
+    form_class = CheckInRequestForm
+    success_url = reverse_lazy('check_in-list')
     permission_required = 'main.can_view_reservation'
     extra_context = {'title': title}
+
+    @transaction.atomic
+    def form_valid(self, form):
+        try:
+            with transaction.atomic():
+                checkin = form.save(commit=False)
+                checkin.user = self.request.user
+                checkin.save()
+        except IntegrityError:
+            raise Http404
+        return super().form_valid(form)
 
 
 class ReservationDetailView(PermissionRequiredMixin, generic.DetailView):

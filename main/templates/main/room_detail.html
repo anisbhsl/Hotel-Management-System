@@ -4,13 +4,24 @@
 {% endblock %}
 <!-- TODO Work on FrontEnd -->
 {% block main-content %}
-    Room No: {{ room.room_no }} <br/>
-    Room Type: {{ room.get_room_type_display }} <br/>
-    Availability : {% if room.availability %} Yes {% else %} No {% endif %} <br/>
-    Facilities: {{ room.display_facility }} <br/>
-    Room Photo: "Not Available" <!--TODO: Image adding --> <br/>
-    {% if room.reservation %}
-        Reservation:
-        <a href="{% url 'reservation-detail' room.reservation_id %}">{{ room.reservation }} </a><br/>
-    {% endif %}
+    <div class="row">
+        <div class="card text-left col-md-6">
+
+            <div class="card-header text-center">
+                <!-- Room Photo -->
+                {% load static %}
+                <img src="#" alt="Room" style="width:200px; height=200px;">
+            </div>
+            <div class="card-header bg-info text-white">Room No: {{ room.room_no }}</div>
+            <div class="card-body bg-info text-white">Room Type: {{ room.get_room_type_display }}</div>
+            <div class="card-footer bg-info text-white">Availability : {% if room.availability %} Yes {% else %} No {% endif %}</div>
+            <div class="card-footer bg-info text-white">  Facilities: {{ room.display_facility }} </div>
+
+            <div class="card-footer bg-info text-white">
+                {% if room.reservation %}
+                    Reservation:
+                    <a href="{% url 'reservation-detail' room.reservation_id %}"class="text-white">{{ room.reservation }} </a><br/>
+                {% endif %}
+            </div>
+        </div>
 {% endblock %}
