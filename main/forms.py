@@ -212,6 +212,7 @@ class ReservationForm(forms.Form):
     email = forms.EmailField(
         label=_("Email"),
         max_length=50,
+        required=False,
         widget=forms.EmailInput(
             attrs={
                 'class': 'form-control',
