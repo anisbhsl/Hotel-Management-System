@@ -63,7 +63,7 @@ class CheckOut(models.Model):
         if not self.id:
             self.check_out_date_time = timezone.now()
             self.stay_duration = self.check_out_date_time - self.check_in.check_in_date_time
-            calculated_duration = timezone.timedelta(days=ceil(self.stay_duration.seconds / 3600 / 24))
+            calculated_duration = timezone.timedelta(days=ceil(self.stay_duration.total_seconds() / 3600 / 24))
             self.total_amount = calculated_duration.days * self.check_in.initial_amount
             self.pay_amount = self.total_amount - self.check_in.initial_amount
         super().save(*args, **kwargs)

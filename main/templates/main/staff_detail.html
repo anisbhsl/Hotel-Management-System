@@ -7,7 +7,7 @@
         <div class="card text-left col-md-6">
             <div class="card-header text-center">
                 {% load static %}
-                <img src="{% static "img/staffavatar.svg"%}" alt="Staff Avatar" style="width:200px; height=200px;">
+                <img src="{{ staff.profile_picture.url }}" alt="Staff Avatar" style="width:200px; height:200px;">
             </div>
             <div class="card-header bg-info text-white">Id: {{ staff.staff_id }}  </div>
             <div class="card-body bg-info text-white">First Name: {{ staff.first_name }}  <br>
@@ -18,7 +18,5 @@
             <div class="card-footer bg-info text-white">  {% if staff.email_address %}Email Address: {{ staff.email_address }} {% endif %}
             </div>
         </div>
-
     </div>
-
 {% endblock %}
