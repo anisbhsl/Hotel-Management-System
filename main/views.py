@@ -3,17 +3,17 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ValidationError
 from django.db import transaction, IntegrityError
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404  # For displaying in template
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
-from django.db.models import Q
 
 from .forms import Signup, ReservationForm, CheckInRequestForm
 from .models import Room, Reservation, Customer, Staff  # Import Models
-from payment.models import CheckIn, CheckOut
+
 
 def index(request):
     """
@@ -282,7 +282,8 @@ class GuestListView(PermissionRequiredMixin, generic.ListView):
     model = Customer
     paginate_by = 5
     allow_empty = True
-    queryset = Customer.objects.all().filter(Q(reservation__checkin__isnull=False), Q(reservation__checkin__checkout__isnull=True))
+    queryset = Customer.objects.all().filter(Q(reservation__checkin__isnull=False),
+                                             Q(reservation__checkin__checkout__isnull=True))
     permission_required = 'main.can_view_customer'
     template_name = 'main/guest_list.html'
     title = 'Guest List View'
