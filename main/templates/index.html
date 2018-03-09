@@ -45,12 +45,12 @@
                     <div class="card-header bg-primary text-white"> Last Reservation:</div>
                     {% if last_reserved_by.reservation_id %}
                         <div class="card-body bg-dark text-white">Reservation for: <a
-                                href="{% url 'customer-detail' last_reserved_by.customer.customer_id %}">{{ last_reserved_by.customer }}</a>
+                                href="{% url 'customer-detail' last_reserved_by.customer.customer_id %}" class="text-white">{{ last_reserved_by.customer }}</a>
                         </div>
                         <div class="card-body bg-primary text-white">
                             Reserved By:
                             {% if perms.main.can_view_staff_detail %}
-                                <a href="{% url 'staff-detail' last_reserved_by.staff.staff_id %}">{{ last_reserved_by.staff }}</a>
+                                <a href="{% url 'staff-detail' last_reserved_by.staff.staff_id %}" class="text-white">{{ last_reserved_by.staff }}</a>
                                 {% else %}{{ last_reserved_by.staff }}
                             {% endif %}
                         </div>

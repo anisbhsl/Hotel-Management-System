@@ -1,21 +1,32 @@
 {% extends 'base.html' %}
 {% block content-title %}
-    <h1>Check-In No: {{ checkin.id }}</h1>
+<h1>Check-In No: {{ checkin.id }}</h1>
 {% endblock %}
 <!-- TODO Work on FrontEnd -->
 {% block main-content %}
-    Reservation:
-    <a href="{% url 'reservation-detail' checkin.reservation.reservation_id %}">{{ checkin.reservation }}</a> <br/>
-    Rooms:
-    {% for room in rooms %}
-        <a href="{% url 'room-detail' room %}">{{ room }}</a>{% if not forloop.last %}, {% endif %}
-    {% empty %}No rooms in the reservation.
-    {% endfor %}<br/>
-    Amount = {{ checkin.initial_amount }}<br/>
-    Check-In Date Time = {{ checkin.check_in_date_time }}<br/>
-    Last Edited On = {{ checkin.last_edited_on }}<br/>
-    Checked In by: {% if staff.count == 0 %} {{ checkin.user }}{% else %}
-        <a href="{% url 'staff-detail' staff.staff_id %}">{{ staff }}</a>
-    {% endif %}
+<div class="row">
+    <div class="card text-left col-md-6">
+        <div class="card-header bg-primary text-white"> Reservation:
+            <a href="{% url 'reservation-detail' checkin.reservation.reservation_id %}">{{ checkin.reservation }}</a>
+        </div>
+        <div class="card-body bg-info text-white">Rooms:
+            {% for room in rooms %}
+            <a href="{% url 'room-detail' room %}" class="text-white">{{ room }}</a>{% if not forloop.last %}, {% endif %}
+            {% empty %}No rooms in the reservation.
+            {% endfor %}
+        </div>
+        <div class="card-footer bg-info text-white">Amount = {{ checkin.initial_amount }}</div>
+        <div class="card-footer bg-info text-white">Check-In Date Time = {{ checkin.check_in_date_time }}</div>
+        <!-- Only if customer has email -->
+        <div class="card-footer bg-info text-white">Last Edited On = {{ checkin.last_edited_on }}
+        </div>
+        <div class="card-footer bg-info text-white">
+            Checked In by: {% if staff.count == 0 %} {{ checkin.user }}{% else %}
+            <a href="{% url 'staff-detail' staff.staff_id %}" class="text-white">{{ staff }}</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 

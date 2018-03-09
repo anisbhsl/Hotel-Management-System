@@ -8,23 +8,23 @@
         <div class="card .col-md-3">
             <div class="card-body">
                 <div class="card-header bg-primary text-white"> Total Reservations:</div>
-                <div class="card-body bg-warning text-white"> {{ num_of_reservations }}</div>
+                <div class="card-body bg-secondary text-white"> {{ num_of_reservations }}</div>
             </div>
         </div>
         <div class="card .col-md-3">
             <div class="card-body">
                 <div class="card-header bg-primary text-white"> Total Check-Ins:</div>
-                <div class="card-body bg-warning text-white"> {{ num_of_check_ins }}</div>
+                <div class="card-body bg-secondary text-white"> {{ num_of_check_ins }}</div>
             </div>
         </div>
         <div class="card .col-md-3">
             <div class="card-body">
                 <div class="card-header bg-primary text-white"> Last Check-In:</div>
                 {% if last_checked_in.id %}
-                    <div class="card-body bg-warning text-white"><a
-                            href="{% url 'check_in-detail' last_checked_in.id %}">{{ last_checked_in }}</a></div>
+                    <div class="card-body bg-secondary text-white"><a
+                            href="{% url 'check_in-detail' last_checked_in.id %}" class="text-white">{{ last_checked_in }}</a></div>
                 {% else %}
-                    <div class="card-body bg-warning text-white">Not Yet</div>
+                    <div class="card-body bg-secondary text-white">Not Yet</div>
                 {% endif %}
             </div>
         </div>
