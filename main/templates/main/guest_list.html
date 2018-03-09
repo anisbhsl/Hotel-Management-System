@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block main-content %}
+    {% if guest_list %}
+        <table class="table table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th>Customer ID</th>
+                <th>Customer Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for guest in guest_list %}
+                <tr>
+                    <td><a href="{% url 'customer-detail' guest.customer_id %}"> {{ guest.customer_id }}</a></td>
+                    <td>{{ guest.first_name }} {{ guest.middle_name }} {{ guest.last_name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There are no guests.</p>
+    {% endif %}
+{% endblock %}
+

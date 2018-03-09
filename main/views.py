@@ -9,10 +9,11 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
+from django.db.models import Q
 
 from .forms import Signup, ReservationForm, CheckInRequestForm
 from .models import Room, Reservation, Customer, Staff  # Import Models
-
+from payment.models import CheckIn, CheckOut
 
 def index(request):
     """
@@ -274,44 +275,16 @@ class ProfileView(generic.TemplateView):
         return context
 
 
-"""
-@permission_required('main.add_reservation', 'login', raise_exception=True)
-@transaction.atomic
-def reserve(request):
-    title = "Add reservation"
-    if request.method == 'POST':
-        try:
-            with transaction.atomic():
-                reservation_form = ReservationForm(request.POST)
-                try:
-                    with transaction.atomic():
-                        customer = Customer(
-                            first_name=reservation_form.cleaned_data.get('first_name'),
-                            middle_name=reservation_form.cleaned_data.get('middle_name'),
-                            last_name=reservation_form.cleaned_data.get('last_name'),
-                            email_address=reservation_form.cleaned_data.get('email'),
-                            address=reservation_form.cleaned_data.get('address'),
-                        )
-                        customer.save()
-                except IntegrityError:
-                    print("Cannot add customer")
-
-                staff = request.user
-                reservation = reservation_form.save(commit=False)
-                reservation.staff = staff
-                reservation.customer = customer
-                reservation.reservation_date_time = timezone.now()
-                reservation.save()
-        except IntegrityError:
-            print("Cannot made reservation")
-
-    else:
-        reservation_form = ReservationForm()
-    return render(
-        request,
-        'reserve.html', {
-            'title': title,
-            'reservation_form': reservation_form,
-        }
-    )
-"""
+class GuestListView(PermissionRequiredMixin, generic.ListView):
+    """
+    View for list of guests present in hotel.
+    """
+    model = Customer
+    paginate_by = 5
+    allow_empty = True
+    queryset = Customer.objects.all().filter(Q(reservation__checkin__isnull=False), Q(reservation__checkin__checkout__isnull=True))
+    permission_required = 'main.can_view_customer'
+    template_name = 'main/guest_list.html'
+    title = 'Guest List View'
+    context_object_name = 'guest_list'
+    extra_context = {'title': title}

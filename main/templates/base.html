@@ -68,10 +68,7 @@
                                 Status</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'reservations' %}">Reservations</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Guests</a>
+                            <a class="nav-link" href="{% url 'guest-list' %}">Guests</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'rooms' %}">Rooms</a>
@@ -84,6 +81,11 @@
                         <ul class="nav nav-pills flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'reserve' %}">Reserve</a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-pills flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'reservations' %}">Reservations</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'check_in-list' %}">Check-ins</a>
@@ -123,7 +125,8 @@
         <!-- ---------------------------------------------------------------------------- -->
 
         <!-- -------------------------Main Body Content---------------------- -->
-        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3" style="background: linear-gradient(to right, lightblue, lightyellow">
+        <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3"
+              style="background: linear-gradient(to right, lightblue, lightyellow)">
             <!-- ---------Content Heading----------- -->
             {% block content-title %}
                 <h1>{{ title }}</h1>

@@ -20,5 +20,6 @@ urlpatterns = [
     path('customer/<str:pk>', views.CustomerDetailView.as_view(), name='customer-detail'),  # Detail of each customer
     path('staff/<str:pk>', views.StaffDetailView.as_view(), name='staff-detail'),  # Detail of staff
     path('profile/', login_required(views.ProfileView.as_view()), name='profile'),
+    path('guests/', views.GuestListView.as_view(), name='guest-list'),
     path('reserve/', views.reserve, name='reserve'),  # For reservation
 ]
